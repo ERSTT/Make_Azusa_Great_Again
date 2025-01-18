@@ -1,9 +1,9 @@
 [
     {
-        "name": "功能模块1",
-        "url": "https://example.com/script1.js",
+        "name": "抽卡界面添加统计",
+        "url": "https://raw.githubusercontent.com/ERSTT/Files/refs/heads/main/JavaScript/Azusa_add_statistics_to_lottery.user.js",
         "description": "这是一个测试模块",
-        "enabled": true
+        "enabled": false
     },
     {
         "name": "功能模块2",
