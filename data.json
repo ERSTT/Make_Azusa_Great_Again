@@ -4,30 +4,54 @@
             "name": "抽卡页",
             "modules": [
                 {
-                    "name": "抽卡界面添加统计",
+                    "name": "抽卡页添加统计",
                     "url": "https://raw.githubusercontent.com/ERSTT/Files/refs/heads/main/JavaScript/Azusa_add_statistics_to_lottery.user.js",
-                    "description": "抽卡界面添加统计",
                     "version": "4.7"
                 },
                 {
-                    "name": "模块 2",
-                    "url": "https://example.com/module2.js",
-                    "version": "1.2.0"
+                    "name": "卡片标记未拥有",
+                    "url": "https://raw.githubusercontent.com/ERSTT/Files/refs/heads/main/JavaScript/Azusa_card_marking_not_owned.user.js",
+                    "version": "3.1"
+                },
+                {
+                    "name": "卡片标记红绿",
+                    "url": "https://raw.githubusercontent.com/ERSTT/Files/refs/heads/main/JavaScript/Azusa_card_marking.user.js",
+                    "version": "2.0"
                 }
             ]
         },
         {
-            "name": "种子",
+            "name": "个人页",
             "modules": [
                 {
-                    "name": "模块 3",
-                    "url": "https://example.com/module3.js",
+                    "name": "个人页魔力统计",
+                    "url": "https://raw.githubusercontent.com/ERSTT/Files/refs/heads/main/JavaScript/Azusa_Bonus_Statistics.user.js",
                     "version": "1.1.5"
+                }
+            ]
+        },
+        {
+            "name": "种子页",
+            "modules": [
+                {
+                    "name": "种子页删除已做种种子",
+                    "url": "https://raw.githubusercontent.com/ERSTT/Files/refs/heads/main/JavaScript/Azusa_remove_seeding.user.js",
+                    "version": "1.0"
                 },
                 {
-                    "name": "模块 4",
-                    "url": "https://example.com/module4.js",
-                    "version": "3.2.0.1"
+                    "name": "禁用发布页上传种子文件自动填写标题",
+                    "url": "https://raw.githubusercontent.com/ERSTT/Files/refs/heads/main/JavaScript/Azusa_disables_automatic_title.user.js",
+                    "version": "1.0"
+                }
+            ]
+        },
+        {
+            "name": "全站生效",
+            "modules": [
+                {
+                    "name": "禁用彩虹ID",
+                    "url": "https://raw.githubusercontent.com/ERSTT/Files/refs/heads/main/JavaScript/Azusa_Disables_Rainbow_ID.user.js",
+                    "version": "1.0"
                 }
             ]
         }
