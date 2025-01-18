@@ -6,16 +6,19 @@
                 {
                     "name": "抽卡页添加统计",
                     "url": "https://raw.githubusercontent.com/ERSTT/Files/refs/heads/main/JavaScript/Azusa_add_statistics_to_lottery.user.js",
+                    "author": "ERST",
                     "version": "4.7"
                 },
                 {
                     "name": "卡片标记未拥有",
                     "url": "https://raw.githubusercontent.com/ERSTT/Files/refs/heads/main/JavaScript/Azusa_card_marking_not_owned.user.js",
+                    "author": "ERST",
                     "version": "3.1"
                 },
                 {
                     "name": "卡片标记红绿",
                     "url": "https://raw.githubusercontent.com/ERSTT/Files/refs/heads/main/JavaScript/Azusa_card_marking.user.js",
+                    "author": "ERST",
                     "version": "2.0"
                 }
             ]
@@ -26,6 +29,7 @@
                 {
                     "name": "个人页魔力统计",
                     "url": "https://raw.githubusercontent.com/ERSTT/Files/refs/heads/main/JavaScript/Azusa_Bonus_Statistics.user.js",
+                    "author": "ERST",
                     "version": "1.1.5"
                 }
             ]
@@ -36,11 +40,13 @@
                 {
                     "name": "种子页删除已做种种子",
                     "url": "https://raw.githubusercontent.com/ERSTT/Files/refs/heads/main/JavaScript/Azusa_remove_seeding.user.js",
+                    "author": "ERST",
                     "version": "1.0"
                 },
                 {
                     "name": "禁用发布页上传种子文件自动填写标题",
                     "url": "https://raw.githubusercontent.com/ERSTT/Files/refs/heads/main/JavaScript/Azusa_disables_automatic_title.user.js",
+                    "author": "ERST",
                     "version": "1.0"
                 }
             ]
@@ -51,6 +57,7 @@
                 {
                     "name": "禁用彩虹ID",
                     "url": "https://raw.githubusercontent.com/ERSTT/Files/refs/heads/main/JavaScript/Azusa_Disables_Rainbow_ID.user.js",
+                    "author": "ERST",
                     "version": "1.0"
                 }
             ]
