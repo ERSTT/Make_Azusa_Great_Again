@@ -73,10 +73,10 @@
                     "version": "1.0"
                 },
                 {
-                    "name": "彩虹ID 打字机效果 测试版",
-                    "url": "https://raw.githubusercontent.com/ERSTT/Files/refs/heads/main/JavaScript/Azusa_test.user.js",
-                    "author": "",
-                    "version": "0.2"
+                    "name": "彩虹ID 打字机效果 初版",
+                    "url": "https://raw.githubusercontent.com/ERSTT/Make_Azusa_Great_Again/refs/heads/main/JavaScript/Azusa_Rainbow_ID_Typing_Effect.user.js",
+                    "author": "作者:<a href='https://azusa.wiki/userdetails.php?id=5170' target='_blank'>ERST</a>",
+                    "version": "0.3"
                 }
             ]
         }
