@@ -29,7 +29,7 @@
                 {
                     "name": "个人页魔力统计",
                     "url": "https://raw.githubusercontent.com/ERSTT/Files/refs/heads/main/JavaScript/Azusa_Bonus_Statistics.user.js",
-                    "author": "<a href="https://github.com/ERSTT/" target="_blank">作者:ERST</a>",
+                    "author": "<a href='https://github.com/ERSTT/' target='_blank'>作者:ERST</a>",
                     "version": "1.0"
                 }
             ]
