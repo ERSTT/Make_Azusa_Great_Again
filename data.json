@@ -1,0 +1,14 @@
+[
+    {
+        "name": "功能模块1",
+        "url": "https://example.com/script1.js",
+        "description": "这是一个测试模块",
+        "enabled": true
+    },
+    {
+        "name": "功能模块2",
+        "url": "https://example.com/script2.js",
+        "description": "另一个测试模块",
+        "enabled": false
+    }
+]
