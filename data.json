@@ -1,11 +1,11 @@
 {
     "modules": [
         {
-        "name": "抽卡界面添加统计",
-        "url": "https://raw.githubusercontent.com/ERSTT/Files/refs/heads/main/JavaScript/Azusa_add_statistics_to_lottery.user.js",
-        "description": "这是一个测试模块",
-        "version": "1.2.0",
-        "enabled": false
+            "name": "抽卡界面添加统计",
+            "url": "https://raw.githubusercontent.com/ERSTT/Files/refs/heads/main/JavaScript/Azusa_add_statistics_to_lottery.user.js",
+            "description": "这是一个测试模块",
+            "version": "1.2.0",
+            "enabled": false
         },
         {
             "name": "模块 2",
