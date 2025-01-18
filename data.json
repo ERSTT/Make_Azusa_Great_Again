@@ -4,7 +4,7 @@
             "name": "抽卡界面添加统计",
             "url": "https://raw.githubusercontent.com/ERSTT/Files/refs/heads/main/JavaScript/Azusa_add_statistics_to_lottery.user.js",
             "description": "抽卡界面添加统计",
-            "version": "4.7",
+            "version": "4.7.0",
             "enabled": false
         },
         {
