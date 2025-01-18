@@ -12,13 +12,13 @@
                 {
                     "name": "卡片标记未拥有",
                     "url": "https://raw.githubusercontent.com/ERSTT/Files/refs/heads/main/JavaScript/Azusa_card_marking_not_owned.user.js",
-                    "author": "ERST",
+                    "author": "作者:ERST",
                     "version": "3.1"
                 },
                 {
                     "name": "卡片标记红绿",
                     "url": "https://raw.githubusercontent.com/ERSTT/Files/refs/heads/main/JavaScript/Azusa_card_marking.user.js",
-                    "author": "ERST",
+                    "author": "作者:ERST",
                     "version": "2.0"
                 }
             ]
@@ -29,8 +29,8 @@
                 {
                     "name": "个人页魔力统计",
                     "url": "https://raw.githubusercontent.com/ERSTT/Files/refs/heads/main/JavaScript/Azusa_Bonus_Statistics.user.js",
-                    "author": "ERST",
-                    "version": "1.1.5"
+                    "author": "<a href="https://github.com/ERSTT/" target="_blank">作者:ERST</a>",
+                    "version": "1.0"
                 }
             ]
         },
