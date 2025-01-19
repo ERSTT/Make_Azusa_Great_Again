@@ -73,8 +73,8 @@
                 overflow: hidden;
                 white-space: nowrap;
                 letter-spacing: .15em;
-                vertical-align: middle;
-                transform: translate(0%, -8%);
+                vertical-align: top;
+                transform: translate(0%, 30%);
                 font-size: 14px;
                 text-align: left;
                 position: relative;
