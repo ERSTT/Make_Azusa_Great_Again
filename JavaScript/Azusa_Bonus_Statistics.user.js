@@ -41,7 +41,7 @@
             return bonus_statistics_loadScript('https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js');
         })
         .then(function () {
-            window.addEventListener('load', bonus_statistics_main);
+            bonus_statistics_main(); // 在两个脚本都加载完成后直接调用 bonus_statistics_main
         })
         .catch(function (error) {
             console.error('加载脚本失败:', error);
@@ -163,7 +163,7 @@
         const filterDiv = document.createElement('div');
         filterDiv.id = 'filterDiv';
         filterDiv.style.marginTop = '10px';
-        filterDiv.innerHTML = ` 
+        filterDiv.innerHTML = `
             <div id="projectSearch" class="checkbox-container"><label>项目:</label></div>
             <div class="filter-row">
                 <label for="minDate">起始时间:</label><input type="date" id="minDate">
