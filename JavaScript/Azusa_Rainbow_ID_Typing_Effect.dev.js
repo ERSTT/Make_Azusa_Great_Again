@@ -2,7 +2,7 @@
 // @name         Azusa 彩虹ID 打字机效果
 // @namespace    https://github.com/ERSTT
 // @icon         https://azusa.wiki/favicon.ico
-// @version      0.4
+// @version      0.5
 // @description  彩虹ID 打字机效果
 // @author       ERST
 // @match        https://azusa.wiki/*
@@ -72,7 +72,7 @@
                 display: inline-block;
                 overflow: hidden;
                 white-space: nowrap;
-                letter-spacing: .15em;
+                letter-spacing: .10em;
                 vertical-align: top;
                 transform: translate(0%, 30%);
                 font-size: 14px;
@@ -137,8 +137,8 @@
                 function calculateTextWidth(text) {
                     const canvas = document.createElement('canvas');
                     const context = canvas.getContext('2d');
-                    context.font = '16px "FusionPixelJA", "FusionPixelZH", monospace'; // 使用相同的字体和大小
-                    const letterSpacing = 1.6; // 使用和CSS中相同的字间距
+                    context.font = '14px "FusionPixelJA", "FusionPixelZH", monospace'; // 使用相同的字体和大小
+                    const letterSpacing = 2.0; // 使用和CSS中相同的字间距
                     let width = 0;
 
                     // 累加每个字符的宽度，并加上字间距
