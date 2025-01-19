@@ -12,6 +12,7 @@
 // @updateURL    https://raw.githubusercontent.com/ERSTT/Make_Azusa_Great_Again/refs/heads/main/JavaScript/Azusa_Bonus_Statistics.user.js
 // @downloadURL  https://raw.githubusercontent.com/ERSTT/Make_Azusa_Great_Again/refs/heads/main/JavaScript/Azusa_Bonus_Statistics.user.js
 // @changelog    适配MAGA
+// @run-at       document-end
 // ==/UserScript==
 
 (function () {
@@ -49,10 +50,10 @@
     function bonus_statistics_main() {
         console.log('页面加载完毕，开始执行魔力统计主逻辑');
         GM_addStyle(`
-            .checkbox-container { display: flex; flex-wrap: wrap; gap: 15px; justify-content: flex-start; }
+            .checkbox-container { display: flex; flex-wrap: nowrap; gap: 15px; justify-content: flex-start; }
             .checkbox-wrapper { display: flex; align-items: center; margin-bottom: 5px; width: auto; }
             .checkbox-wrapper input[type="checkbox"] { margin-right: 5px; }
-            .filter-row { display: flex; gap: 10px; margin-top: 10px; align-items: center; }
+            .filter-row { display: flex; gap: 10px; margin-top: 10px; align-items: center; flex-wrap: nowrap; }
             .filter-row label, .filter-row input { font-size: 14px; }
             table#magicStatsTable { width: 100%; margin-top: 10px; }
             table#magicStatsTable th, table#magicStatsTable td { text-align: center; vertical-align: middle; }
@@ -162,7 +163,7 @@
         const filterDiv = document.createElement('div');
         filterDiv.id = 'filterDiv';
         filterDiv.style.marginTop = '10px';
-        filterDiv.innerHTML = `
+        filterDiv.innerHTML = ` 
             <div id="projectSearch" class="checkbox-container"><label>项目:</label></div>
             <div class="filter-row">
                 <label for="minDate">起始时间:</label><input type="date" id="minDate">
