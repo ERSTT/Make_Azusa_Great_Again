@@ -17,8 +17,8 @@
 
     // 扩宽页面。如果不需要该功能，请删除或注释掉这段代码。
     // let mainouter = document.getElementsByClassName('mainouter')[0];
-    let main = document.getElementsByClassName('main')[0];
-    if (mainouter && main && mainouter.parentNode.offsetWidth - mainouter.clientWidth > 600) main.width = (parseInt(main.width, 10) + 400).toString();
+    // let main = document.getElementsByClassName('main')[0];
+    // if (mainouter && main && mainouter.parentNode.offsetWidth - mainouter.clientWidth > 600) main.width = (parseInt(main.width, 10) + 400).toString();
 
     let set_html = (e, h) => e.innerHTML === h || (e.innerHTML = h);
     let bgm_icon = (b_id, style) => `<a href="https://bgm.tv/subject/${b_id}" target="_blank"><div style="display: inline-block; background-image: url('https://bgm.tv/img/favicon.ico'); background-repeat: no-repeat; background-position: 0 -4px; width: 16px; height: 12px; ${style}"></div></a>`;
