@@ -17,7 +17,7 @@
 (async function () {
     'use strict';
 
-    const loadScript = src => new Promise((resolve, reject) => {
+    const bonus_statistics_loadScript = src => new Promise((resolve, reject) => {
         const script = document.createElement('script');
         script.src = src;
         script.onload = resolve;
@@ -26,14 +26,14 @@
     });
 
     try {
-        await loadScript('https://code.jquery.com/jquery-3.6.0.min.js');
-        await loadScript('https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js');
-        window.addEventListener('load', main);
+        await bonus_statistics_loadScript('https://code.jquery.com/jquery-3.6.0.min.js');
+        await bonus_statistics_loadScript('https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js');
+        window.addEventListener('load', bonus_statistics_main);
     } catch (error) {
         console.error('加载脚本失败:', error);
     }
 
-    function main() {
+    function bonus_statistics_main() {
         GM_addStyle(`
             .checkbox-container { display: flex; flex-wrap: wrap; gap: 15px; justify-content: flex-start; }
             .checkbox-wrapper { display: flex; align-items: center; margin-bottom: 5px; width: auto; }
@@ -49,7 +49,7 @@
         targetTextarea.style.display = 'none';
 
         const statsDiv = document.createElement('div');
-        statsDiv.appendChild(createTitle('魔力统计'));
+        statsDiv.appendChild(bonus_statistics_createTitle('魔力统计'));
 
         const rawData = targetTextarea.value.trim();
         if (!rawData) {
@@ -57,23 +57,23 @@
             return;
         }
 
-        const records = parseData(rawData);
-        statsDiv.appendChild(createSummaryDiv(records));
-        statsDiv.appendChild(createFilterDiv(records));
-        statsDiv.appendChild(createTable(records));
+        const records = bonus_statistics_parseData(rawData);
+        statsDiv.appendChild(bonus_statistics_createSummaryDiv(records));
+        statsDiv.appendChild(bonus_statistics_createFilterDiv(records));
+        statsDiv.appendChild(bonus_statistics_createTable(records));
 
         targetTextarea.parentNode.insertBefore(statsDiv, targetTextarea);
-        initDataTable(records);
-        updateSummary(records);
+        bonus_statistics_initDataTable(records);
+        bonus_statistics_updateSummary(records);
     }
 
-    function createTitle(text) {
+    function bonus_statistics_createTitle(text) {
         const title = document.createElement('h3');
         title.textContent = text;
         return title;
     }
 
-    function parseData(rawData) {
+    function bonus_statistics_parseData(rawData) {
         return rawData.split('\n').map(line => {
             const [time, , project, before, spent, after, content] = line.split('|');
             let correctedSpent = spent.replace(/--/g, '-');
@@ -90,27 +90,27 @@
         });
     }
 
-    function createSummaryDiv(records) {
+    function bonus_statistics_createSummaryDiv(records) {
         const summaryDiv = document.createElement('div');
         summaryDiv.id = 'summaryDiv';
 
         const totalSpent = records.reduce((sum, record) => sum + (record.spent < 0 ? Math.abs(record.spent) : 0), 0);
         const totalEarned = records.reduce((sum, record) => sum + (record.spent > 0 ? record.spent : 0), 0);
 
-        const summaryContainer = createContainer('summary-container', 'flex', 'flex-start', '10px');
-        summaryContainer.appendChild(createSummaryItem('总共消耗魔力值', totalSpent));
-        summaryContainer.appendChild(createSummaryItem('总共获得魔力值', totalEarned));
+        const summaryContainer = bonus_statistics_createContainer('summary-container', 'flex', 'flex-start', '10px');
+        summaryContainer.appendChild(bonus_statistics_createSummaryItem('总共消耗魔力值', totalSpent));
+        summaryContainer.appendChild(bonus_statistics_createSummaryItem('总共获得魔力值', totalEarned));
         summaryDiv.appendChild(summaryContainer);
 
-        const currentStatsDiv = createContainer('current-stats-container', 'flex', 'flex-start', '10px');
-        currentStatsDiv.appendChild(createSummaryItem('当前消耗魔力值', 0, 'current-spent'));
-        currentStatsDiv.appendChild(createSummaryItem('当前获得魔力值', 0, 'current-earned'));
+        const currentStatsDiv = bonus_statistics_createContainer('current-stats-container', 'flex', 'flex-start', '10px');
+        currentStatsDiv.appendChild(bonus_statistics_createSummaryItem('当前消耗魔力值', 0, 'current-spent'));
+        currentStatsDiv.appendChild(bonus_statistics_createSummaryItem('当前获得魔力值', 0, 'current-earned'));
         summaryDiv.appendChild(currentStatsDiv);
 
         return summaryDiv;
     }
 
-    function createContainer(className, display, justifyContent, gap) {
+    function bonus_statistics_createContainer(className, display, justifyContent, gap) {
         const div = document.createElement('div');
         div.className = className;
         div.style.display = display;
@@ -119,14 +119,14 @@
         return div;
     }
 
-    function createSummaryItem(text, value, className = '') {
+    function bonus_statistics_createSummaryItem(text, value, className = '') {
         const div = document.createElement('div');
         div.className = className;
         div.textContent = `${text}: ${value.toLocaleString()}`;
         return div;
     }
 
-    function createFilterDiv(records) {
+    function bonus_statistics_createFilterDiv(records) {
         const filterDiv = document.createElement('div');
         filterDiv.id = 'filterDiv';
         filterDiv.style.marginTop = '10px';
@@ -144,15 +144,15 @@
         projects.forEach(project => {
             const checkboxWrapper = document.createElement('div');
             checkboxWrapper.classList.add('checkbox-wrapper');
-            checkboxWrapper.appendChild(createCheckbox(project));
-            checkboxWrapper.appendChild(createCheckboxLabel(project));
+            checkboxWrapper.appendChild(bonus_statistics_createCheckbox(project));
+            checkboxWrapper.appendChild(bonus_statistics_createCheckboxLabel(project));
             projectContainer.appendChild(checkboxWrapper);
         });
 
         return filterDiv;
     }
 
-    function createCheckbox(project) {
+    function bonus_statistics_createCheckbox(project) {
         const checkbox = document.createElement('input');
         checkbox.type = 'checkbox';
         checkbox.value = project;
@@ -160,14 +160,14 @@
         return checkbox;
     }
 
-    function createCheckboxLabel(project) {
+    function bonus_statistics_createCheckboxLabel(project) {
         const label = document.createElement('label');
         label.setAttribute('for', `project-${project}`);
         label.textContent = project;
         return label;
     }
 
-    function createTable(records) {
+    function bonus_statistics_createTable(records) {
         const table = document.createElement('table');
         table.id = 'magicStatsTable';
         table.style.marginTop = '10px';
@@ -177,24 +177,24 @@
         const thead = document.createElement('thead');
         const headers = ['时间', '项目', '消费前魔力', '花费魔力', '消费后魔力', '描述'];
         const headerRow = document.createElement('tr');
-        headers.forEach(header => headerRow.appendChild(createTableHeader(header)));
+        headers.forEach(header => headerRow.appendChild(bonus_statistics_createTableHeader(header)));
         thead.appendChild(headerRow);
         table.appendChild(thead);
 
         const tbody = document.createElement('tbody');
-        records.forEach(record => tbody.appendChild(createTableRow(record)));
+        records.forEach(record => tbody.appendChild(bonus_statistics_createTableRow(record)));
         table.appendChild(tbody);
 
         return table;
     }
 
-    function createTableHeader(header) {
+    function bonus_statistics_createTableHeader(header) {
         const th = document.createElement('th');
         th.textContent = header;
         return th;
     }
 
-    function createTableRow(record) {
+    function bonus_statistics_createTableRow(record) {
         const row = document.createElement('tr');
         [record.time, record.project, record.before, record.spent, record.after, record.content].forEach(value => {
             const td = document.createElement('td');
@@ -204,22 +204,22 @@
         return row;
     }
 
-    function initDataTable(records) {
+    function bonus_statistics_initDataTable(records) {
         const interval = setInterval(() => {
             if (typeof $ !== 'undefined' && $.fn.dataTable) {
                 const tableInstance = $('#magicStatsTable').DataTable({ paging: false, ordering: true, info: false, dom: 't', pageLength: -1, order: [[0, 'desc']] });
-                $.fn.dataTable.ext.search.push((settings, data) => filterData(data));
+                $.fn.dataTable.ext.search.push((settings, data) => bonus_statistics_filterData(data));
                 $('#minDate, #maxDate, #projectSearch, #contentSearch').on('change keyup', () => {
                     tableInstance.draw();
-                    updateSummary(tableInstance.rows({ filter: 'applied' }).data().toArray());
+                    bonus_statistics_updateSummary(tableInstance.rows({ filter: 'applied' }).data().toArray());
                 });
                 clearInterval(interval);
-                updateSummary(records);
+                bonus_statistics_updateSummary(records);
             }
         }, 100);
     }
 
-    function filterData(data) {
+    function bonus_statistics_filterData(data) {
         const min = $('#minDate').val();
         const max = $('#maxDate').val();
         const selectedProjects = $('#projectSearch input:checked').map(function () { return this.value; }).get();
@@ -231,7 +231,7 @@
         return (!min || date >= min) && (!max || date <= max) && isProjectMatch && (!content || description.includes(content));
     }
 
-    function updateSummary(filteredData) {
+    function bonus_statistics_updateSummary(filteredData) {
         let totalSpent = 0, totalEarned = 0, currentSpent = 0, currentEarned = 0;
 
         filteredData.forEach(row => {
