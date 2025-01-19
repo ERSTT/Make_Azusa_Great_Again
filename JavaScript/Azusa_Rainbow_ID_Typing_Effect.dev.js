@@ -68,13 +68,11 @@
             }
 
             .typewriter {
-                font-family: 'FusionPixelJA', 'FusionPixelZH', monospace;
+                font-family: 'FusionPixelZH', 'FusionPixelJA', monospace;
                 display: inline-block;
-                overflow: hidden;
+                overflow: visible;
                 white-space: nowrap;
                 letter-spacing: .10em;
-                vertical-align: top;
-                transform: translate(0%, 30%);
                 font-size: 14px;
                 text-align: left;
                 position: relative;
