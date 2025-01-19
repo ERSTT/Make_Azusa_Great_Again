@@ -14,32 +14,37 @@
 // @changelog    适配MAGA
 // ==/UserScript==
 
-(async function () {
+(function () {
     'use strict';
 
-    const bonus_statistics_loadScript = src => new Promise((resolve, reject) => {
-        console.log(`正在加载脚本: ${src}`);
-        const script = document.createElement('script');
-        script.src = src;
-        script.onload = () => {
-            console.log(`脚本加载成功: ${src}`);
-            resolve();
-        };
-        script.onerror = (error) => {
-            console.error(`脚本加载失败: ${src}`, error);
-            reject(error);
-        };
-        document.body.appendChild(script);
-    });
+    const bonus_statistics_loadScript = function (src) {
+        return new Promise(function (resolve, reject) {
+            console.log(`正在加载脚本: ${src}`);
+            const script = document.createElement('script');
+            script.src = src;
+            script.onload = function () {
+                console.log(`脚本加载成功: ${src}`);
+                resolve();
+            };
+            script.onerror = function (error) {
+                console.error(`脚本加载失败: ${src}`, error);
+                reject(error);
+            };
+            document.body.appendChild(script);
+        });
+    };
 
-    try {
-        console.log('开始加载 jQuery 和 DataTables');
-        await bonus_statistics_loadScript('https://code.jquery.com/jquery-3.6.0.min.js');
-        await bonus_statistics_loadScript('https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js');
-        window.addEventListener('load', bonus_statistics_main);
-    } catch (error) {
-        console.error('加载脚本失败:', error);
-    }
+    console.log('开始加载 jQuery 和 DataTables');
+    bonus_statistics_loadScript('https://code.jquery.com/jquery-3.6.0.min.js')
+        .then(function () {
+            return bonus_statistics_loadScript('https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js');
+        })
+        .then(function () {
+            window.addEventListener('load', bonus_statistics_main);
+        })
+        .catch(function (error) {
+            console.error('加载脚本失败:', error);
+        });
 
     function bonus_statistics_main() {
         console.log('页面加载完毕，开始执行魔力统计主逻辑');
@@ -92,7 +97,7 @@
 
     function bonus_statistics_parseData(rawData) {
         console.log('开始解析数据');
-        return rawData.split('\n').map(line => {
+        return rawData.split('\n').map(function (line) {
             const [time, , project, before, spent, after, content] = line.split('|');
             let correctedSpent = spent.replace(/--/g, '-');
             let spentValue = parseInt(correctedSpent.replace(/,/g, ''), 10);
@@ -114,8 +119,12 @@
         const summaryDiv = document.createElement('div');
         summaryDiv.id = 'summaryDiv';
 
-        const totalSpent = records.reduce((sum, record) => sum + (record.spent < 0 ? Math.abs(record.spent) : 0), 0);
-        const totalEarned = records.reduce((sum, record) => sum + (record.spent > 0 ? record.spent : 0), 0);
+        const totalSpent = records.reduce(function (sum, record) {
+            return sum + (record.spent < 0 ? Math.abs(record.spent) : 0);
+        }, 0);
+        const totalEarned = records.reduce(function (sum, record) {
+            return sum + (record.spent > 0 ? record.spent : 0);
+        }, 0);
 
         const summaryContainer = bonus_statistics_createContainer('summary-container', 'flex', 'flex-start', '10px');
         summaryContainer.appendChild(bonus_statistics_createSummaryItem('总共消耗魔力值', totalSpent));
@@ -163,8 +172,8 @@
         `;
 
         const projectContainer = filterDiv.querySelector('#projectSearch');
-        const projects = [...new Set(records.map(record => record.project))];
-        projects.forEach(project => {
+        const projects = [...new Set(records.map(function (record) { return record.project; }))];
+        projects.forEach(function (project) {
             const checkboxWrapper = document.createElement('div');
             checkboxWrapper.classList.add('checkbox-wrapper');
             checkboxWrapper.appendChild(bonus_statistics_createCheckbox(project));
@@ -201,12 +210,16 @@
         const thead = document.createElement('thead');
         const headers = ['时间', '项目', '消费前魔力', '花费魔力', '消费后魔力', '描述'];
         const headerRow = document.createElement('tr');
-        headers.forEach(header => headerRow.appendChild(bonus_statistics_createTableHeader(header)));
+        headers.forEach(function (header) {
+            headerRow.appendChild(bonus_statistics_createTableHeader(header));
+        });
         thead.appendChild(headerRow);
         table.appendChild(thead);
 
         const tbody = document.createElement('tbody');
-        records.forEach(record => tbody.appendChild(bonus_statistics_createTableRow(record)));
+        records.forEach(function (record) {
+            tbody.appendChild(bonus_statistics_createTableRow(record));
+        });
         table.appendChild(tbody);
 
         return table;
@@ -220,7 +233,7 @@
 
     function bonus_statistics_createTableRow(record) {
         const row = document.createElement('tr');
-        [record.time, record.project, record.before, record.spent, record.after, record.content].forEach(value => {
+        [record.time, record.project, record.before, record.spent, record.after, record.content].forEach(function (value) {
             const td = document.createElement('td');
             td.textContent = value;
             row.appendChild(td);
@@ -230,11 +243,13 @@
 
     function bonus_statistics_initDataTable(records) {
         console.log('初始化 DataTable');
-        const interval = setInterval(() => {
+        const interval = setInterval(function () {
             if (typeof $ !== 'undefined' && $.fn.dataTable) {
                 const tableInstance = $('#magicStatsTable').DataTable({ paging: false, ordering: true, info: false, dom: 't', pageLength: -1, order: [[0, 'desc']] });
-                $.fn.dataTable.ext.search.push((settings, data) => bonus_statistics_filterData(data));
-                $('#minDate, #maxDate, #projectSearch, #contentSearch').on('change keyup', () => {
+                $.fn.dataTable.ext.search.push(function (settings, data) {
+                    return bonus_statistics_filterData(data);
+                });
+                $('#minDate, #maxDate, #projectSearch, #contentSearch').on('change keyup', function () {
                     tableInstance.draw();
                     bonus_statistics_updateSummary(tableInstance.rows({ filter: 'applied' }).data().toArray());
                 });
@@ -261,7 +276,7 @@
         console.log('更新统计摘要');
         let totalSpent = 0, totalEarned = 0, currentSpent = 0, currentEarned = 0;
 
-        filteredData.forEach(row => {
+        filteredData.forEach(function (row) {
             const spent = parseInt(row.spent !== undefined ? row.spent : row[3], 10);
             if (!isNaN(spent)) {
                 if (spent < 0) currentSpent += Math.abs(spent);
@@ -269,12 +284,12 @@
             }
         });
 
-        totalSpent = filteredData.reduce((sum, row) => {
+        totalSpent = filteredData.reduce(function (sum, row) {
             const spent = parseInt(row.spent !== undefined ? row.spent : row[3], 10);
             return spent < 0 ? sum + Math.abs(spent) : sum;
         }, 0);
 
-        totalEarned = filteredData.reduce((sum, row) => {
+        totalEarned = filteredData.reduce(function (sum, row) {
             const spent = parseInt(row.spent !== undefined ? row.spent : row[3], 10);
             return spent > 0 ? sum + spent : sum;
         }, 0);
