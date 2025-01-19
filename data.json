@@ -60,9 +60,9 @@
                 },
                 {
                     "name": "种子页添加Bangumi封面.评分.标签",
-                    "url": "https://update.greasyfork.org/scripts/517279/azusa_partner.user.js",
+                    "url": "https://raw.githubusercontent.com/ERSTT/Make_Azusa_Great_Again/refs/heads/main/JavaScript/azusa_partner.user.js",
                     "author": "作者:<a href='https://azusa.wiki/userdetails.php?id=3551' target='_blank'>moeruotaku</a>",
-                    "version": "2024.12.1.1264",
+                    "version": "2024.12.1.1264.1",
                     "id": "1"
                 },
                 {
