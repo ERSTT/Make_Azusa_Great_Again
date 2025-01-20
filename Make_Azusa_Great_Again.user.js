@@ -2,7 +2,7 @@
 // @name         Make Azusa Great Again
 // @namespace    https://github.com/ERSTT
 // @icon         https://azusa.wiki/favicon.ico
-// @version      1.1
+// @version      1.2
 // @description  Make Azusa Great Again
 // @author       ERST
 // @match        https://azusa.wiki/*
@@ -96,7 +96,7 @@
             const cachedScript = getModuleScript(menuId, moduleId);
             if (cachedScript) {
                 try {
-                    eval(cachedScript);
+                    executeInNamespace(menuId, moduleId, cachedScript);
                     return;
                 } catch (e) {}
             }
@@ -109,13 +109,19 @@
                 try {
                     const scriptContent = response.responseText;
                     saveModuleScript(menuId, moduleId, scriptContent);
-                    eval(scriptContent);
+                    executeInNamespace(menuId, moduleId, scriptContent);
                     setModuleLocalVersion(menuId, moduleId, module.version);
                     updateVersionDisplay(menuId, moduleId);
                 } catch (e) {}
             },
             onerror: function() {}
         });
+    }
+
+    function executeInNamespace(menuId, moduleId, scriptContent) {
+        const namespace = `module_${menuId}_${moduleId}`;
+        const wrappedScript = `(function(${namespace}) { ${scriptContent} })({});`;
+        eval(wrappedScript);
     }
 
     function getModuleById(menuId, moduleId) {
@@ -437,7 +443,7 @@
                 try {
                     const scriptContent = response.responseText;
                     saveModuleScript(menuId, moduleId, scriptContent);
-                    eval(scriptContent);
+                    executeInNamespace(menuId, moduleId, scriptContent);
                     setModuleLocalVersion(menuId, moduleId, module.version);
                     updateVersionDisplay(menuId, moduleId);
                 } catch (e) {}
@@ -447,62 +453,61 @@
     }
 
     function clearLocalStorage() {
-        GM_listValues().forEach((key) => {
-            GM_deleteValue(key);
-        });
-    }
-
-    GM_addStyle(`
-        .switch {
-            position: relative;
-            display: inline-block;
-            width: 34px;
-            height: 20px;
+            GM_listValues().forEach((key) => {
+                GM_deleteValue(key);
+            });
         }
 
-        .switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
+        GM_addStyle(`
+            .switch {
+                position: relative;
+                display: inline-block;
+                width: 34px;
+                height: 20px;
+            }
 
-        .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #ccc;
-            transition: .4s;
-            border-radius: 20px;
-        }
+            .switch input {
+                opacity: 0;
+                width: 0;
+                height: 0;
+            }
 
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 12px;
-            width: 12px;
-            left: 4px;
-            bottom: 4px;
-            background-color: white;
-            transition: .4s;
-            border-radius: 50%;
-        }
+            .slider {
+                position: absolute;
+                cursor: pointer;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-color: #ccc;
+                transition: .4s;
+                border-radius: 20px;
+            }
 
-        input:checked + .slider {
-            background-color: #2196F3;
-        }
+            .slider:before {
+                position: absolute;
+                content: "";
+                height: 12px;
+                width: 12px;
+                left: 4px;
+                bottom: 4px;
+                background-color: white;
+                transition: .4s;
+                border-radius: 50%;
+            }
 
-        input:checked + .slider:before {
-            transform: translateX(14px);
-        }
+            input:checked + .slider {
+                background-color: #2196F3;
+            }
 
-        #new-version-alert {
-            display: none;
-        }
-    `);
+            input:checked + .slider:before {
+                transform: translateX(14px);
+            }
 
-    fetchModulesConfig();
+            #new-version-alert {
+                display: none;
+            }
+        `);
 
-})();
+        fetchModulesConfig();
+    })();
