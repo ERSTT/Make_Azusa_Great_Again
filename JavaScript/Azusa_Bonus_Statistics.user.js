@@ -2,7 +2,7 @@
 // @name         Azusa 魔力统计
 // @namespace    https://github.com/ERSTT
 // @icon         https://azusa.wiki/favicon.ico
-// @version      1.5
+// @version      1.6
 // @description  Azusa 个人页魔力统计改为表格形式
 // @author       ERST
 // @match        https://azusa.wiki/*userdetails*
@@ -179,6 +179,15 @@
             projectContainer.appendChild(checkboxWrapper);
         });
 
+        // Add the export button
+        const exportButton = document.createElement('button');
+        exportButton.textContent = '导出所有数据到CSV';
+        exportButton.style.marginLeft = '20px';
+        exportButton.addEventListener('click', function () {
+            bonus_statistics_exportToCSV(records);
+        });
+        filterDiv.querySelector('.filter-row').appendChild(exportButton);
+
         return filterDiv;
     }
 
@@ -299,5 +308,29 @@
 
         currentStatsDiv.querySelector('.current-spent').textContent = `当前消耗魔力值: ${currentSpent.toLocaleString()}`;
         currentStatsDiv.querySelector('.current-earned').textContent = `当前获得魔力值: ${currentEarned.toLocaleString()}`;
+    }
+
+    function bonus_statistics_exportToCSV(records) {
+        const csvHeaders = ['时间', '项目', '触发前魔力', '花费/获得魔力', '触发后魔力', '描述'];
+        const csvRows = records.map(record => [
+            record.time,
+            record.project,
+            record.before,
+            record.spent,
+            record.after,
+            record.content
+        ]);
+
+        const csvContent = [
+            '\uFEFF', // 添加 BOM 字节
+            csvHeaders.join(','),
+            ...csvRows.map(row => row.join(','))
+        ].join('\n');
+
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = '魔力统计.csv';
+        link.click();
     }
 })();
