@@ -1,121 +1,26 @@
 // ==UserScript==
-// @name         Azusa 彩虹ID 打字机效果
+// @name         Azusa 彩虹ID 打字机效果修复
 // @namespace    https://github.com/ERSTT
 // @icon         https://azusa.wiki/favicon.ico
-// @version      0.3
-// @description  彩虹ID 打字机效果
+// @version      0.1
+// @description  修复特效
 // @author       ERST
 // @match        https://azusa.wiki/*
 // @match        https://zimiao.icu/*
-// @connect      githubusercontent.com
-// @connect      github.com
-// @grant        GM_addStyle
-// @grant        GM_xmlhttpRequest
-// @run-at       document-end
-// @changelog    添加彩虹效果
+// @grant        none
 // ==/UserScript==
 
 (function() {
     'use strict';
 
-    const fontUrls = {
-        'FusionPixelJA': 'https://github.com/ERSTT/Files/raw/refs/heads/main/font/fusion-pixel-12px-monospaced-ja.woff2',
-        'FusionPixelZH': 'https://github.com/ERSTT/Files/raw/refs/heads/main/font/fusion-pixel-12px-monospaced-zh_hans.woff2'
-    };
+    const elementsToModify = document.querySelectorAll('.rainbow-typewriter');
 
-    function loadFont(url, fontName, callback) {
-        GM_xmlhttpRequest({
-            method: 'GET',
-            url: url,
-            responseType: 'arraybuffer',
-            onload: function(response) {
-                if (response.status === 200) {
-                    const fontArrayBuffer = response.response;
-                    const base64Font = arrayBufferToBase64(fontArrayBuffer);
-                    callback(base64Font, fontName);
-                }
-            },
-            onerror: function() {
-                console.error(`无法加载字体: ${url}`);
-            }
-        });
-    }
+    elementsToModify.forEach(element => {
+        const username = element.textContent.trim();
 
-    function arrayBufferToBase64(buffer) {
-        let binary = '';
-        const bytes = new Uint8Array(buffer);
-        const len = bytes.byteLength;
-        for (let i = 0; i < len; i++) {
-            binary += String.fromCharCode(bytes[i]);
-        }
-        return window.btoa(binary);
-    }
-
-    function injectFonts(base64Fonts) {
-        const css = `
-            @font-face {
-                font-family: 'FusionPixelJA';
-                src: url('data:font/woff2;base64,${base64Fonts['FusionPixelJA']}') format('woff2');
-                font-weight: normal;
-                font-style: normal;
-            }
-
-            @font-face {
-                font-family: 'FusionPixelZH';
-                src: url('data:font/woff2;base64,${base64Fonts['FusionPixelZH']}') format('woff2');
-                font-weight: normal;
-                font-style: normal;
-            }
-
-            .typewriter {
-                font-family: 'FusionPixelJA', 'FusionPixelZH', monospace;
-                display: inline-block;
-                overflow: hidden;
-                white-space: nowrap;
-                letter-spacing: .15em;
-                vertical-align: middle;
-                line-height: -1.0;
-            }
-
-            .typewriter::after {
-                content: '|';
-                font-weight: bold;
-                animation: blink-caret 1.5s step-end infinite;
-            }
-
-            @keyframes blink-caret {
-                from, to { color: transparent; }
-                50% { color: orange; }
-            }
-        `;
-        GM_addStyle(css);
-    }
-
-    const base64Fonts = {};
-    let fontsLoaded = 0;
-
-    for (const fontName in fontUrls) {
-        loadFont(fontUrls[fontName], fontName, function(base64Font, fontName) {
-            base64Fonts[fontName] = base64Font;
-            fontsLoaded++;
-            if (fontsLoaded === Object.keys(fontUrls).length) {
-                injectFonts(base64Fonts);
-                modifyUserSpan();
-            }
-        });
-    }
-
-    function modifyUserSpan() {
-        const userSpan = Array.from(document.querySelectorAll('td.bottom span.medium span.nowrap b span')).find(span => span.textContent.trim() !== '');
-
-        if (userSpan) {
-            const username = userSpan.textContent.trim();
-
-            userSpan.textContent = '';
-
-            userSpan.className = '';
-            userSpan.classList.add('typewriter');
-            userSpan.id = 'typewriter';
+        if (username) {
+            element.textContent = '';
+            element.classList.add('typewriter');
 
             let emoticonIndex = 0;
             let charIndex = 0;
@@ -131,9 +36,24 @@
                 return `rgb(${r}, ${g}, ${b})`;
             }
 
+            function calculateTextWidth(text) {
+                const canvas = document.createElement('canvas');
+                const context = canvas.getContext('2d');
+                context.font = '14px "FusionPixelJA", "FusionPixelZH", monospace';
+                const letterSpacing = 2.0;
+                let width = 0;
+                for (let i = 0; i < text.length; i++) {
+                    width += context.measureText(text[i]).width + letterSpacing;
+                }
+                return width;
+            }
+
             function typeEffect() {
                 const currentEmoticon = emoticons[emoticonIndex];
                 const fullText = username + ' ' + currentEmoticon;
+
+                const textWidth = calculateTextWidth(fullText);
+                element.style.width = `${textWidth}px`;
 
                 if (!isDeleting) {
                     charIndex++;
@@ -147,7 +67,7 @@
                         const color = charColors[index];
                         return `<span style="color: ${color}">${char}</span>`;
                     }).join('');
-                    userSpan.innerHTML = spanText;
+                    element.innerHTML = spanText;
 
                     if (charIndex === fullText.length) {
                         setTimeout(() => {
@@ -164,7 +84,7 @@
                         const color = charColors[index];
                         return `<span style="color: ${color}">${char}</span>`;
                     }).join('');
-                    userSpan.innerHTML = spanText;
+                    element.innerHTML = spanText;
 
                     if (charIndex === 0) {
                         setTimeout(() => {
@@ -183,5 +103,5 @@
 
             typeEffect();
         }
-    }
+    });
 })();
