@@ -1,39 +1,49 @@
+// ==UserScript==
+// @name         Azusa 魔力统计
+// @namespace    https://github.com/ERSTT
+// @icon         https://azusa.wiki/favicon.ico
+// @version      1.4
+// @description  Azusa 个人页魔力统计改为表格形式
+// @author       ERST
+// @match        https://azusa.wiki/*userdetails*
+// @match        https://zimiao.icu/*userdetails*
+// @grant        GM_xmlhttpRequest
+// @grant        GM_addStyle
+// @updateURL    https://raw.githubusercontent.com/ERSTT/Make_Azusa_Great_Again/refs/heads/main/JavaScript/Azusa_Bonus_Statistics.user.js
+// @downloadURL  https://raw.githubusercontent.com/ERSTT/Make_Azusa_Great_Again/refs/heads/main/JavaScript/Azusa_Bonus_Statistics.user.js
+// @changelog    适配MAGA
+// @run-at       document-end
+// ==/UserScript==
+
 (function () {
     'use strict';
 
     const bonus_statistics_loadScript = function (src) {
         return new Promise(function (resolve, reject) {
-            console.log(`正在加载脚本: ${src}`);
             const script = document.createElement('script');
             script.src = src;
             script.onload = function () {
-                console.log(`脚本加载成功: ${src}`);
                 resolve();
             };
             script.onerror = function (error) {
-                console.error(`脚本加载失败: ${src}`, error);
                 reject(error);
             };
             document.body.appendChild(script);
         });
     };
 
-    console.log('开始加载 jQuery 和 DataTables');
     bonus_statistics_loadScript('https://code.jquery.com/jquery-3.6.0.min.js')
         .then(function () {
-            console.log('jQuery 加载成功，开始加载 DataTables');
             return bonus_statistics_loadScript('https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js');
         })
         .then(function () {
-            console.log('DataTables 加载成功，开始执行魔力统计主逻辑');
-            bonus_statistics_main(); // 在两个脚本都加载完成后直接调用 bonus_statistics_main
+            bonus_statistics_main();
         })
         .catch(function (error) {
             console.error('加载脚本失败:', error);
         });
 
     function bonus_statistics_main() {
-        console.log('页面加载完毕，开始执行魔力统计主逻辑');
         GM_addStyle(`
             .checkbox-container { display: flex; flex-wrap: nowrap; gap: 15px; justify-content: flex-start; }
             .checkbox-wrapper { display: flex; align-items: center; margin-bottom: 5px; width: auto; }
@@ -46,10 +56,8 @@
 
         const targetTextarea = document.querySelector('textarea[readonly][disabled]');
         if (!targetTextarea) {
-            console.log('没有找到目标文本框，无法继续执行');
             return;
         }
-        console.log('找到了目标文本框，开始处理数据');
         targetTextarea.style.display = 'none';
 
         const statsDiv = document.createElement('div');
@@ -58,18 +66,15 @@
         const rawData = targetTextarea.value.trim();
         if (!rawData) {
             statsDiv.textContent = '框体描述为空，无法生成统计数据';
-            console.log('框体描述为空，无法生成统计数据');
             return;
         }
 
-        console.log('开始解析数据');
         const records = bonus_statistics_parseData(rawData);
         statsDiv.appendChild(bonus_statistics_createSummaryDiv(records));
         statsDiv.appendChild(bonus_statistics_createFilterDiv(records));
         statsDiv.appendChild(bonus_statistics_createTable(records));
 
         targetTextarea.parentNode.insertBefore(statsDiv, targetTextarea);
-        console.log('魔力统计内容已插入页面');
 
         bonus_statistics_initDataTable(records);
         bonus_statistics_updateSummary(records);
@@ -78,42 +83,28 @@
     function bonus_statistics_createTitle(text) {
         const title = document.createElement('h3');
         title.textContent = text;
-        console.log(`创建标题: ${text}`);
         return title;
     }
 
     function bonus_statistics_parseData(rawData) {
-        console.log('开始解析数据');
-        
-        // 分割每一行数据并开始解析
         const lines = rawData.split('\n');
-        console.log(`数据分为 ${lines.length} 行进行解析`);
-        
+
         return lines.map(function (line, index) {
-            console.log(`正在处理第 ${index + 1} 行: ${line.trim()}`);
-            
             const parts = line.split('|');
-            
+
             if (parts.length !== 7) {
-                console.warn(`第 ${index + 1} 行格式不正确，跳过: ${line.trim()}`);
                 return null;
             }
-            
+
             const [time, , project, before, spent, after, content] = parts;
-            console.log(`提取的字段: 时间 = ${time}, 项目 = ${project}, 消费前魔力 = ${before}, 花费魔力 = ${spent}, 消费后魔力 = ${after}, 描述 = ${content}`);
-            
+
             let correctedSpent = spent.replace(/--/g, '-');
             let spentValue = parseInt(correctedSpent.replace(/,/g, ''), 10);
-            
-            console.log(`修正后的花费魔力: ${spent} -> ${spentValue}`);
-            
+
             if (spent.includes('--') || spent.startsWith('-')) {
                 spentValue = -Math.abs(spentValue);
-                console.log(`检测到负值标志，修正后的花费魔力为负: ${spentValue}`);
             }
 
-            console.log(`解析数据: ${time.trim()}, ${project.trim()}, ${before}, ${spentValue}, ${after}, ${content.trim()}`);
-            
             return {
                 time: time.trim(),
                 project: project.trim(),
@@ -126,7 +117,6 @@
     }
 
     function bonus_statistics_createSummaryDiv(records) {
-        console.log('创建统计摘要');
         const summaryDiv = document.createElement('div');
         summaryDiv.id = 'summaryDiv';
 
@@ -156,7 +146,6 @@
         div.style.display = display;
         div.style.justifyContent = justifyContent;
         div.style.gap = gap;
-        console.log(`创建容器: ${className}`);
         return div;
     }
 
@@ -164,12 +153,10 @@
         const div = document.createElement('div');
         div.className = className;
         div.textContent = `${text}: ${value.toLocaleString()}`;
-        console.log(`创建统计项: ${text} ${value.toLocaleString()}`);
         return div;
     }
 
     function bonus_statistics_createFilterDiv(records) {
-        console.log('创建筛选项');
         const filterDiv = document.createElement('div');
         filterDiv.id = 'filterDiv';
         filterDiv.style.marginTop = '10px';
@@ -211,7 +198,6 @@
     }
 
     function bonus_statistics_createTable(records) {
-        console.log('创建数据表格');
         const table = document.createElement('table');
         table.id = 'magicStatsTable';
         table.style.marginTop = '10px';
@@ -253,7 +239,6 @@
     }
 
     function bonus_statistics_initDataTable(records) {
-        console.log('初始化 DataTable');
         const interval = setInterval(function () {
             if (typeof $ !== 'undefined' && $.fn.dataTable) {
                 const tableInstance = $('#magicStatsTable').DataTable({ paging: false, ordering: true, info: false, dom: 't', pageLength: -1, order: [[0, 'desc']] });
@@ -266,7 +251,6 @@
                 });
                 clearInterval(interval);
                 bonus_statistics_updateSummary(records);
-                console.log('DataTable 初始化完毕');
             }
         }, 100);
     }
@@ -284,7 +268,6 @@
     }
 
     function bonus_statistics_updateSummary(filteredData) {
-        console.log('更新统计摘要');
         let totalSpent = 0, totalEarned = 0, currentSpent = 0, currentEarned = 0;
 
         filteredData.forEach(function (row) {
