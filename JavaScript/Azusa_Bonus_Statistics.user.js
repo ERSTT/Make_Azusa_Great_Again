@@ -1,20 +1,3 @@
-// ==UserScript==
-// @name         Azusa 魔力统计
-// @namespace    https://github.com/ERSTT
-// @icon         https://azusa.wiki/favicon.ico
-// @version      1.4
-// @description  Azusa 个人页魔力统计改为表格形式
-// @author       ERST
-// @match        https://azusa.wiki/*userdetails*
-// @match        https://zimiao.icu/*userdetails*
-// @grant        GM_xmlhttpRequest
-// @grant        GM_addStyle
-// @updateURL    https://raw.githubusercontent.com/ERSTT/Make_Azusa_Great_Again/refs/heads/main/JavaScript/Azusa_Bonus_Statistics.user.js
-// @downloadURL  https://raw.githubusercontent.com/ERSTT/Make_Azusa_Great_Again/refs/heads/main/JavaScript/Azusa_Bonus_Statistics.user.js
-// @changelog    适配MAGA
-// @run-at       document-end
-// ==/UserScript==
-
 (function () {
     'use strict';
 
@@ -38,9 +21,11 @@
     console.log('开始加载 jQuery 和 DataTables');
     bonus_statistics_loadScript('https://code.jquery.com/jquery-3.6.0.min.js')
         .then(function () {
+            console.log('jQuery 加载成功，开始加载 DataTables');
             return bonus_statistics_loadScript('https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js');
         })
         .then(function () {
+            console.log('DataTables 加载成功，开始执行魔力统计主逻辑');
             bonus_statistics_main(); // 在两个脚本都加载完成后直接调用 bonus_statistics_main
         })
         .catch(function (error) {
@@ -77,6 +62,7 @@
             return;
         }
 
+        console.log('开始解析数据');
         const records = bonus_statistics_parseData(rawData);
         statsDiv.appendChild(bonus_statistics_createSummaryDiv(records));
         statsDiv.appendChild(bonus_statistics_createFilterDiv(records));
@@ -98,12 +84,36 @@
 
     function bonus_statistics_parseData(rawData) {
         console.log('开始解析数据');
-        return rawData.split('\n').map(function (line) {
-            const [time, , project, before, spent, after, content] = line.split('|');
+        
+        // 分割每一行数据并开始解析
+        const lines = rawData.split('\n');
+        console.log(`数据分为 ${lines.length} 行进行解析`);
+        
+        return lines.map(function (line, index) {
+            console.log(`正在处理第 ${index + 1} 行: ${line.trim()}`);
+            
+            const parts = line.split('|');
+            
+            if (parts.length !== 7) {
+                console.warn(`第 ${index + 1} 行格式不正确，跳过: ${line.trim()}`);
+                return null;
+            }
+            
+            const [time, , project, before, spent, after, content] = parts;
+            console.log(`提取的字段: 时间 = ${time}, 项目 = ${project}, 消费前魔力 = ${before}, 花费魔力 = ${spent}, 消费后魔力 = ${after}, 描述 = ${content}`);
+            
             let correctedSpent = spent.replace(/--/g, '-');
             let spentValue = parseInt(correctedSpent.replace(/,/g, ''), 10);
-            if (spent.includes('--') || spent.startsWith('-')) spentValue = -Math.abs(spentValue);
+            
+            console.log(`修正后的花费魔力: ${spent} -> ${spentValue}`);
+            
+            if (spent.includes('--') || spent.startsWith('-')) {
+                spentValue = -Math.abs(spentValue);
+                console.log(`检测到负值标志，修正后的花费魔力为负: ${spentValue}`);
+            }
+
             console.log(`解析数据: ${time.trim()}, ${project.trim()}, ${before}, ${spentValue}, ${after}, ${content.trim()}`);
+            
             return {
                 time: time.trim(),
                 project: project.trim(),
@@ -112,7 +122,7 @@
                 after: parseInt(after.replace(/,/g, ''), 10),
                 content: content.trim()
             };
-        });
+        }).filter(record => record !== null);
     }
 
     function bonus_statistics_createSummaryDiv(records) {
