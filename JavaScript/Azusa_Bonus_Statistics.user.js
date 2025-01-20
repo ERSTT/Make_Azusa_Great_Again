@@ -2,7 +2,7 @@
 // @name         Azusa 魔力统计
 // @namespace    https://github.com/ERSTT
 // @icon         https://azusa.wiki/favicon.ico
-// @version      1.4
+// @version      1.5
 // @description  Azusa 个人页魔力统计改为表格形式
 // @author       ERST
 // @match        https://azusa.wiki/*userdetails*
@@ -230,7 +230,10 @@
 
     function bonus_statistics_createTableRow(record) {
         const row = document.createElement('tr');
-        [record.time, record.project, record.before, record.spent, record.after, record.content].forEach(function (value) {
+
+        const spentValue = record.spent >= 0 ? `+${record.spent}` : record.spent;
+
+        [record.time, record.project, record.before, spentValue, record.after, record.content].forEach(function (value) {
             const td = document.createElement('td');
             td.textContent = value;
             row.appendChild(td);
