@@ -205,7 +205,7 @@
         table.className = 'display';
 
         const thead = document.createElement('thead');
-        const headers = ['时间', '项目', '消费前魔力', '花费魔力', '消费后魔力', '描述'];
+        const headers = ['时间', '项目', '触发前魔力', '花费/获得魔力', '触发后魔力', '描述'];
         const headerRow = document.createElement('tr');
         headers.forEach(function (header) {
             headerRow.appendChild(bonus_statistics_createTableHeader(header));
