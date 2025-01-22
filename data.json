@@ -91,7 +91,7 @@
                     "author": "作者:<a href='https://azusa.wiki/userdetails.php?id=3551' target='_blank'>moeruotaku</a>",
                     "version": "2024.12.1.1264",
                     "id": "4"
-,
+                },
                 {
                     "name": "站点图片添加到浏览器缓存",
                     "url": "https://raw.githubusercontent.com/ERSTT/Make_Azusa_Great_Again/refs/heads/main/JavaScript/Azusa_Cache_images.user.js",
