@@ -5,28 +5,28 @@
             "id": "0",
             "modules": [
                 {
-                    "name": "抽卡页添加统计",
+                    "name": "抽卡页添加统计 可能与动态彩虹ID冲突 待审查",
                     "url": "https://raw.githubusercontent.com/ERSTT/Files/refs/heads/main/JavaScript/Azusa_add_statistics_to_lottery.user.js",
-                    "author": "作者:<a href='https://azusa.wiki/userdetails.php?id=5170' target='_blank'>ERST</a>",
+                    "author": "",
                     "version": "4.8",
                     "id": "0"
                 },
                 {
-                    "name": "卡片标记未拥有",
+                    "name": "卡片标记未拥有 可能与动态彩虹ID冲突 待审查",
                     "url": "https://raw.githubusercontent.com/ERSTT/Files/refs/heads/main/JavaScript/Azusa_card_marking_not_owned.user.js",
-                    "author": "作者:<a href='https://azusa.wiki/userdetails.php?id=5170' target='_blank'>ERST</a>",
+                    "author": "",
                     "version": "3.1",
                     "id": "1"
                 },
                 {
-                    "name": "卡片标记红绿",
+                    "name": "卡片标记红绿 可能与动态彩虹ID冲突 待审查",
                     "url": "https://raw.githubusercontent.com/ERSTT/Files/refs/heads/main/JavaScript/Azusa_card_marking.user.js",
-                    "author": "作者:<a href='https://azusa.wiki/userdetails.php?id=5170' target='_blank'>ERST</a>",
+                    "author": "",
                     "version": "2.0",
                     "id": "2"
                 },
                 {
-                    "name": "一键翻转所有卡片",
+                    "name": "一键翻转所有卡片 可能与动态彩虹ID冲突 待审查",
                     "url": "https://raw.githubusercontent.com/ERSTT/Files/refs/heads/main/JavaScript/Azusa_Turn_all_cards.user.js",
                     "author": "",
                     "version": "1.3",
