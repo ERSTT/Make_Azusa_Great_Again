@@ -98,6 +98,13 @@
                     "author": "作者:<a href='https://azusa.wiki/userdetails.php?id=3551' target='_blank'>moeruotaku</a>",
                     "version": "2024.12.1.1264",
                     "id": "4"
+                },
+                {
+                    "name": "添加自定义背景图片功能",
+                    "url": "https://raw.githubusercontent.com/ERSTT/Make_Azusa_Great_Again/refs/heads/main/JavaScript/Azusa_expand_the_page_width.user.js",
+                    "author": "<a href='https://azusa.wiki/usercp.php?action=tracker' target='_blank'>点此前往设置</a>",
+                    "version": "0.3",
+                    "id": "6"
                 }
             ]
         }
