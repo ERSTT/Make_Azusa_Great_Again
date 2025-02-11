@@ -15,7 +15,7 @@
 (function() {
     'use strict';
 
-    let bgUrl = GM_getValue('customBgUrl', 'https://azusa.wiki/random_image.php');
+    let bgUrl = GM_getValue('customBgUrl', '/random_image.php');
 
     function applyBackground(url) {
         GM_addStyle(`
