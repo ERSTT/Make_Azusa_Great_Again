@@ -2,7 +2,7 @@
 // @name         添加自定义背景图片功能
 // @namespace    https://github.com/ERSTT
 // @icon         https://azusa.wiki/favicon.ico
-// @version      0.3
+// @version      0.4
 // @description  添加自定义背景图片功能
 // @author       ERST
 // @match        https://azusa.wiki/*
@@ -68,8 +68,17 @@
                 applyBackground(inputBox.value);
             });
 
+            const recommendationRow = document.createElement("tr");
+
+            const recommendationText = document.createElement("font");
+            recommendationText.className = "small";
+            recommendationText.innerHTML = '可以试试<a href="https://steamcommunity.com/sharedfiles/filedetails/?id=1337409100"><b>这些Steam个人资料页背景</b></a>哦！';
+
+            recommendationRow.appendChild(recommendationText);
+
             inputCell.appendChild(inputBox);
             inputCell.appendChild(saveButton);
+            inputCell.appendChild(recommendationRow);
             newRow.appendChild(labelCell);
             newRow.appendChild(inputCell);
 
