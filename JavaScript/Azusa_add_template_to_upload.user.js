@@ -31,9 +31,9 @@
 
     const templates = [
         { name: "自购 bangumi", content: "此处替换为 bangumi BBcode\n提取脚本\nhttps://greasyfork.org/zh-CN/scripts/25925-bangumi-info-export\n游戏需发候选 不可直接发布\n\n注：\n暂无\n\n[spoiler=自购证明][img]这里替换自购证明图片URL[/img][/spoiler]" },
-        { name: "自购 自填", content: "[img]替换为 漫画/画集/轻小说/音乐/游戏 的封面图URL[/img]\n\n[b]简介 : [/b]\n替换为 漫画/画集/轻小说/音乐/游戏 的简介内容\n游戏需发候选 不可直接发布\n\n[spoiler=自购证明][img]替换为 自购证明 的图片URL[/img][/spoiler]" },
+        { name: "自购 自填", content: "[img]替换为 漫画/画集/轻小说/音乐/游戏 的封面图URL[/img]\n\n[b]简介 : [/b]\n替换为 漫画/画集/轻小说/音乐/游戏 的简介内容\n游戏需发候选 不可直接发布\n\n注：\n暂无\n\n[spoiler=自购证明][img]替换为 自购证明 的图片URL[/img][/spoiler]" },
         { name: "转种 bangumi", content: "此处替换为 bangumi BBcode\n提取脚本\nhttps://greasyfork.org/zh-CN/scripts/25925-bangumi-info-export\n游戏需发候选 不可直接发布\n\n注：\n暂无\n\n[quote]此处填写转钟信息[/quote]" },
-        { name: "转种 自填", content: "[img]替换为 漫画/画集/轻小说/音乐/游戏 的封面图URL[/img]\n\n[b]简介 : [/b]\n替换为 漫画/画集/轻小说/音乐/游戏 的简介内容\n游戏需发候选 不可直接发布\n\n[quote]此处填写转钟信息[/quote]" },
+        { name: "转种 自填", content: "[img]替换为 漫画/画集/轻小说/音乐/游戏 的封面图URL[/img]\n\n[b]简介 : [/b]\n替换为 漫画/画集/轻小说/音乐/游戏 的简介内容\n游戏需发候选 不可直接发布\n\n注：\n暂无\n\n[quote]此处填写转钟信息[/quote]" },
     ];
 
     function insertTemplate(content) {
