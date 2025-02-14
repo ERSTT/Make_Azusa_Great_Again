@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         Azusa Add Template_to_upload
+// @name         Azusa 上传界面添加预设模板
 // @namespace    https://github.com/ERSTT
 // @icon         https://azusa.wiki/favicon.ico
 // @version      0.1
