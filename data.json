@@ -48,6 +48,26 @@
             ]
         },
         {
+            "name": "上传页",
+            "id": "1",
+            "modules": [
+                {
+                    "name": "添加预设简介模板",
+                    "url": "https://raw.githubusercontent.com/ERSTT/Make_Azusa_Great_Again/refs/heads/main/JavaScript/Azusa_Bonus_Statistics.user.js",
+                    "author": "",
+                    "version": "0.1",
+                    "id": "0"
+                },
+                {
+                    "name": "禁止上传种子文件时自动填写标题",
+                    "url": "https://raw.githubusercontent.com/ERSTT/Files/refs/heads/main/JavaScript/Azusa_disables_automatic_title.user.js",
+                    "author": "",
+                    "version": "1.0",
+                    "id": "2"
+                }
+            ]
+        },
+        {
             "name": "种子页",
             "id": "2",
             "modules": [
@@ -64,13 +84,6 @@
                     "author": "作者:<a href='https://azusa.wiki/userdetails.php?id=3551' target='_blank'>moeruotaku</a>",
                     "version": "2024.12.1.1264.1",
                     "id": "1"
-                },
-                {
-                    "name": "禁止上传种子文件时自动填写标题",
-                    "url": "https://raw.githubusercontent.com/ERSTT/Files/refs/heads/main/JavaScript/Azusa_disables_automatic_title.user.js",
-                    "author": "",
-                    "version": "1.0",
-                    "id": "2"
                 }
             ]
         },
