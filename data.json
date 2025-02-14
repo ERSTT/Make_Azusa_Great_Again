@@ -53,7 +53,7 @@
             "modules": [
                 {
                     "name": "添加预设简介模板",
-                    "url": "https://raw.githubusercontent.com/ERSTT/Make_Azusa_Great_Again/refs/heads/main/JavaScript/Azusa_Bonus_Statistics.user.js",
+                    "url": "https://github.com/ERSTT/Make_Azusa_Great_Again/raw/refs/heads/main/JavaScript/Azusa_add_template_to_upload.user.js",
                     "author": "",
                     "version": "0.1",
                     "id": "0"
