@@ -10,8 +10,8 @@
             position: fixed; top: 0; left: 0;
             width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.2);
-            backdrop-filter: blur(5px); /* 毛玻璃始终生效 */
-            z-index: 9999; 
+            backdrop-filter: blur(5px);
+            z-index: 9999;
             opacity: 0; visibility: hidden;
             transition: opacity 0.3s ease, visibility 0.3s;
         }
@@ -23,12 +23,11 @@
             border-radius: 10px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
             z-index: 10000; padding: 15px;
             overflow-y: auto;
-            transform: translate(-50%, -50%) scale(0.8); /* 初始缩小 */
+            transform: translate(-50%, -50%) scale(0.8);
             opacity: 0; visibility: hidden;
             transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
         }
         
-        /* 显示时的动画 */
         .preview-overlay.show {
             opacity: 1; visibility: visible;
         }
@@ -72,6 +71,10 @@
         if (event.target.matches('.preview-close, .preview-overlay')) {
             modal.classList.remove('show');
             overlay.classList.remove('show');
+            return;
+        }
+
+        if (event.target.closest('.torrent-tags')) {
             return;
         }
 
