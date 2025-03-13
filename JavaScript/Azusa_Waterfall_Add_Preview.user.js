@@ -79,8 +79,8 @@
             return;
         }
 
-        if (event.target.closest('.torrent-tags')) {
-            return;
+        if (event.target.closest('.torrent-tags .button-container')) {
+            return; 
         }
 
         let link = event.target.closest('.torrent-title a, .torrent-cover-container a');
