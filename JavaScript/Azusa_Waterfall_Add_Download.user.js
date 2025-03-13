@@ -70,6 +70,7 @@
         .button-container {
             display: flex;
             gap: 5px;
+            margin-left: auto;
         }
         .download-button, .bookmark-button {
             display: inline-block;
