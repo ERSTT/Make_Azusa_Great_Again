@@ -5,8 +5,8 @@
         return;
     }
 
-    GM_addStyle(`
-        .preview-overlay {
+    GM_addStyle(
+        `.preview-overlay {
             position: fixed; top: 0; left: 0;
             width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.2);
@@ -15,7 +15,7 @@
             opacity: 0; visibility: hidden;
             transition: opacity 0.3s ease, visibility 0.3s;
         }
-        
+
         .preview-modal {
             position: fixed; top: 50%; left: 50%;
             width: 60%; height: 80%;
@@ -27,7 +27,7 @@
             opacity: 0; visibility: hidden;
             transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
         }
-        
+
         .preview-overlay.show {
             opacity: 1; visibility: visible;
         }
@@ -43,7 +43,7 @@
             font-weight: bold; background: rgba(255, 255, 255, 0.6);
             padding: 5px 10px; border-radius: 50%;
         }
-        
+
         .preview-close:hover { background: rgba(255, 255, 255, 0.9); }
 
         .preview-modal {
@@ -56,13 +56,14 @@
         }
     `);
 
-    document.body.insertAdjacentHTML('beforeend', `
-        <div class="preview-overlay"></div>
+    document.body.insertAdjacentHTML('beforeend',
+        `<div class="preview-overlay"></div>
         <div class="preview-modal">
             <span class="preview-close">✖</span>
-            <div id="preview-content">加载中...</div>
-        </div>
-    `);
+            <div id="preview-content"></div>
+            <div id="peerlist"></div> 
+        </div>`
+    );
 
     const modal = document.querySelector('.preview-modal'),
           overlay = document.querySelector('.preview-overlay');
@@ -71,6 +72,10 @@
         if (event.target.matches('.preview-close, .preview-overlay')) {
             modal.classList.remove('show');
             overlay.classList.remove('show');
+            
+            document.getElementById('preview-content').innerHTML = '';
+            document.getElementById('peerlist').innerHTML = '';
+            
             return;
         }
 
@@ -79,20 +84,40 @@
         }
 
         let link = event.target.closest('.torrent-title a, .torrent-cover-container a');
-        if (!link) return;
+        if (link) {
+            event.preventDefault();
+            GM_xmlhttpRequest({
+                method: 'GET', url: link.href,
+                onload: function (response) {
+                    let doc = new DOMParser().parseFromString(response.responseText, 'text/html');
+                    let descTd = [...doc.querySelectorAll('.rowhead')].find(td => td.textContent.includes('简介'));
+                    document.getElementById('preview-content').innerHTML = descTd ? descTd.nextElementSibling.innerHTML : '无法加载简介';
 
-        event.preventDefault();
+                    modal.classList.add('show');
+                    overlay.classList.add('show');
+                    modal.scrollTop = 0;
+                }
+            });
+        }
+
+        if (event.target.closest('.torrent-stats')) {
+            const statsElement = event.target.closest('.torrent-stats');
+            const torrentId = statsElement.closest('.torrent-card').querySelector('a').href.split('=')[1];
+            showPeerList(torrentId);
+        }
+    });
+
+    function showPeerList(torrentId) {
+        modal.classList.add('show');
+        overlay.classList.add('show');
+        document.getElementById("peerlist").innerHTML = '加载中...';
+
         GM_xmlhttpRequest({
-            method: 'GET', url: link.href,
+            method: 'GET',
+            url: `viewpeerlist.php?id=${torrentId}`,
             onload: function (response) {
-                let doc = new DOMParser().parseFromString(response.responseText, 'text/html');
-                let descTd = [...doc.querySelectorAll('.rowhead')].find(td => td.textContent.includes('简介'));
-                document.getElementById('preview-content').innerHTML = descTd ? descTd.nextElementSibling.innerHTML : '无法加载简介';
-
-                modal.classList.add('show');
-                overlay.classList.add('show');
-                modal.scrollTop = 0;
+                document.getElementById("peerlist").innerHTML = response.responseText;
             }
         });
-    });
+    }
 })();
