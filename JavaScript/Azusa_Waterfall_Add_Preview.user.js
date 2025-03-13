@@ -1,7 +1,6 @@
 (function () {
     'use strict';
 
-    // 仅在特定页面生效
     if (!window.location.href.includes('customBgUrl') && !window.location.href.includes('/torrent-waterfall.php')) {
         return;
     }
@@ -57,7 +56,7 @@
             return;
         }
 
-        let link = event.target.closest('.torrent-title a');
+        let link = event.target.closest('.torrent-title a, .torrent-cover-container a');
         if (!link) return;
 
         event.preventDefault();
