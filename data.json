@@ -72,6 +72,20 @@
             "id": "2",
             "modules": [
                 {
+                    "name": "瀑布流点击改为预览简介",
+                    "url": "https://raw.githubusercontent.com/ERSTT/Make_Azusa_Great_Again/refs/heads/main/JavaScript/Azusa_Waterfall_Add_Preview.user.js",
+                    "author": "建议配合添加下载按钮使用",
+                    "version": "0.1",
+                    "id": "2"
+                },
+                {
+                    "name": "瀑布流卡片右上角添加下载按钮",
+                    "url": "https://raw.githubusercontent.com/ERSTT/Make_Azusa_Great_Again/refs/heads/main/JavaScript/Azusa_Waterfall_Add_Download.user.js",
+                    "author": "",
+                    "version": "0.1",
+                    "id": "3"
+                },
+                {
                     "name": "种子页删除已做种种子",
                     "url": "https://raw.githubusercontent.com/ERSTT/Files/refs/heads/main/JavaScript/Azusa_remove_seeding.user.js",
                     "author": "",
