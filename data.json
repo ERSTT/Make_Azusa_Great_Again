@@ -95,6 +95,14 @@
                     "auto": "0"
                 },
                 {
+                    "name": "瀑布流自定义每行卡片数量",
+                    "url": "https://raw.githubusercontent.com/ERSTT/Make_Azusa_Great_Again/refs/heads/main/JavaScript/Azusa_Waterfall_Custom_Grid.user.js",
+                    "author": "",
+                    "version": "0.1",
+                    "id": "5",
+                    "auto": "0"
+                },
+                {
                     "name": "种子页删除已做种种子",
                     "url": "https://raw.githubusercontent.com/ERSTT/Files/refs/heads/main/JavaScript/Azusa_remove_seeding.user.js",
                     "author": "",
