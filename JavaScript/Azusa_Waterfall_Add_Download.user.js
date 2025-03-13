@@ -1,10 +1,11 @@
 (function () {
     'use strict';
 
-    // 仅在特定页面生效
     if (!window.location.href.includes('customBgUrl') && !window.location.href.includes('/torrent-waterfall.php')) {
         return;
     }
+
+    let bookmarkIndex = 0;
 
     function createDownloadButton(torrentId) {
         const button = document.createElement('a');
@@ -14,11 +15,20 @@
         return button;
     }
 
-    function addDownloadButtons() {
-        document.querySelectorAll('.torrent-card').forEach(card => {
-            if (card.querySelector('.download-button')) return;
+    function createBookmarkButton(torrentId, index) {
+        const button = document.createElement('a');
+        button.id = `bookmark${index}`;
+        button.href = `javascript: bookmark(${torrentId},${index});`;
+        button.classList.add('bookmark-button');
+        button.innerHTML = '<img class="delbookmark" src="pic/trans.gif" alt="Unbookmarked" title="收藏">';
+        return button;
+    }
 
-            const titleLink = card.querySelector('.torrent-title a[href*="id="]');
+    function addButtons() {
+        document.querySelectorAll('.torrent-card').forEach(card => {
+            if (card.querySelector('.download-button') || card.querySelector('.bookmark-button')) return;
+
+            const titleLink = card.querySelector('.torrent-cover-container a[href*="id="]');
             if (!titleLink) return;
 
             const match = titleLink.href.match(/id=(\d+)/);
@@ -26,7 +36,19 @@
 
             card.style.position = 'relative';
             const downloadButton = createDownloadButton(match[1]);
-            card.appendChild(downloadButton);
+            const bookmarkButton = createBookmarkButton(match[1], bookmarkIndex++);
+
+            const tagsContainer = card.querySelector('.torrent-tags');
+            if (tagsContainer) {
+                const buttonContainer = document.createElement('div');
+                buttonContainer.classList.add('button-container');
+                buttonContainer.appendChild(bookmarkButton);
+                buttonContainer.appendChild(downloadButton);
+                tagsContainer.appendChild(buttonContainer);
+            } else {
+                card.appendChild(bookmarkButton);
+                card.appendChild(downloadButton);
+            }
         });
     }
 
@@ -38,26 +60,28 @@
         };
     }
 
-    // 样式优化，减少内联 CSS
     const style = document.createElement('style');
     style.textContent = `
-        .download-button {
-            position: absolute;
-            top: 5px;
-            right: 5px;
-            z-index: 10;
+        .torrent-tags {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-        .download-button img {
-            padding-bottom: 2px;
+        .button-container {
+            display: flex;
+            gap: 5px;
+        }
+        .download-button, .bookmark-button {
+            display: inline-block;
+        }
+        .download-button img, .bookmark-button img {
+            vertical-align: middle;
         }
     `;
     document.head.appendChild(style);
 
-    // 确保在 DOM 加载完成后运行
-    window.addEventListener('load', addDownloadButtons);
+    window.addEventListener('load', addButtons);
 
-    // 监听动态变化（适用于 AJAX 加载），防止频繁触发
-    const observer = new MutationObserver(debounce(addDownloadButtons, 300));
+    const observer = new MutationObserver(debounce(addButtons, 300));
     observer.observe(document.body, { childList: true, subtree: true });
-
 })();
