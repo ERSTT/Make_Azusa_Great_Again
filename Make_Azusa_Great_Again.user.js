@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         Make Azusa Great Again DEV
+// @name         Make Azusa Great Again
 // @namespace    https://github.com/ERSTT
 // @icon         https://azusa.wiki/favicon.ico
 // @version      1.2.2
