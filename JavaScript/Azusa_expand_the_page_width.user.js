@@ -88,18 +88,39 @@
     const closeButton = document.getElementById('close-modal');
     const saveStatus = document.getElementById('save-status');
 
+    // 使用 MutationObserver 来监视 DOM 的变化
     const observer = new MutationObserver((mutations) => {
         mutations.forEach((mutation) => {
-            const settingsButton = document.getElementById('azusa_expand_the_page_width_settings_button');
-            if (settingsButton) {
-                settingsButton.addEventListener('click', () => {
-                    modal.style.display = 'flex';
-                });
-                observer.disconnect();
+            const moduleCheckbox = document.getElementById('module-3-4');
+
+            // 确保目标元素存在
+            if (moduleCheckbox) {
+                // 获取 `module-3-4` 的父元素，并找到上一个兄弟元素
+                const targetDiv = moduleCheckbox.closest('div[style="margin-bottom: 5px; font-size: 14px; display: flex; align-items: center; justify-content: space-between; white-space: nowrap;"]');
+
+                if (targetDiv) {
+                    // 检查按钮是否已经存在
+                    const existingButton = targetDiv.querySelector('#azusa_expand_the_page_width_settings_button');
+                    if (!existingButton) {
+                        const settingsButton = document.createElement('button');
+                        settingsButton.id = 'azusa_expand_the_page_width_settings_button';
+                        settingsButton.textContent = '设置页面';
+
+                        // 插入设置按钮到目标 div
+                        targetDiv.querySelector('div[style="font-size: 12px; margin-left: 10px; white-space: nowrap;"]').appendChild(settingsButton);
+
+                        settingsButton.addEventListener('click', () => {
+                            modal.style.display = 'flex';
+                        });
+                    }
+
+                    observer.disconnect(); // 停止监听
+                }
             }
         });
     });
 
+    // 开始监听整个 body 中的变化
     observer.observe(document.body, { childList: true, subtree: true });
 
     saveButton.addEventListener('click', () => {
@@ -151,7 +172,6 @@
         setTimeout(() => {
             saveStatus.style.display = 'none';
         }, 1500);
-
     });
 
     closeButton.addEventListener('click', () => {
