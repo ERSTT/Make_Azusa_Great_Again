@@ -87,10 +87,10 @@
                     "auto": "0"
                 },
                 {
-                    "name": "瀑布流卡片右上角添加下载按钮",
+                    "name": "瀑布流卡片添加一些按钮",
                     "url": "https://raw.githubusercontent.com/ERSTT/Make_Azusa_Great_Again/refs/heads/main/JavaScript/Azusa_Waterfall_Add_Download.user.js",
                     "author": "",
-                    "version": "0.1",
+                    "version": "0.2",
                     "id": "3",
                     "auto": "0"
                 },
