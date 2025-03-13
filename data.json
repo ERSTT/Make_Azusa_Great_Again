@@ -79,10 +79,10 @@
             "id": "2",
             "modules": [
                 {
-                    "name": "瀑布流点击改为预览简介",
+                    "name": "瀑布流点击改为预览简介/做种列表",
                     "url": "https://raw.githubusercontent.com/ERSTT/Make_Azusa_Great_Again/refs/heads/main/JavaScript/Azusa_Waterfall_Add_Preview.user.js",
                     "author": "建议配合添加下载按钮使用",
-                    "version": "0.6",
+                    "version": "0.7",
                     "id": "2",
                     "auto": "0"
                 },
