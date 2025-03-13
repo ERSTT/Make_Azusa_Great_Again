@@ -1,8 +1,8 @@
 // ==UserScript==
-// @name         Make Azusa Great Again
+// @name         Make Azusa Great Again DEV
 // @namespace    https://github.com/ERSTT
 // @icon         https://azusa.wiki/favicon.ico
-// @version      1.2.1
+// @version      1.2.2
 // @description  Make Azusa Great Again
 // @author       ERST
 // @match        https://azusa.wiki/*
@@ -25,6 +25,7 @@
 // @grant        GM_getValue
 // @grant        GM_deleteValue
 // @grant        GM_listValues
+// @grant        unsafeWindow
 // @run-at       document-body
 // ==/UserScript==
 
@@ -83,28 +84,37 @@
     function loadAndExecuteModules() {
         modulesConfig.forEach((menu) => {
             menu.modules.forEach((module) => {
-                if (getModuleState(menu.id, module.id)) {
-                    loadAndExecuteModule(menu.id, module.id);
+                if (getModuleState(menu.id, module.id) || module.auto === 1) {
+                    loadAndExecuteModule(menu.id, module.id, true);
                 }
             });
         });
     }
 
-    function loadAndExecuteModule(menuId, moduleId) {
+    function loadAndExecuteModule(menuId, moduleId, forceUpdate = false) {
         const module = getModuleById(menuId, moduleId);
-        const localVersion = getModuleLocalVersion(menuId, moduleId);
-        const onlineVersion = module.version;
 
-        if (localVersion === onlineVersion) {
-            const cachedScript = getModuleScript(menuId, moduleId);
-            if (cachedScript) {
-                try {
-                    executeInNamespace(menuId, moduleId, cachedScript);
-                    return;
-                } catch (e) {}
+        if (forceUpdate) {
+            fetchAndUpdateModule(menuId, moduleId, module);
+        } else {
+            const localVersion = getModuleLocalVersion(menuId, moduleId);
+            const onlineVersion = module.version;
+
+            if (localVersion === onlineVersion) {
+                const cachedScript = getModuleScript(menuId, moduleId);
+                if (cachedScript) {
+                    try {
+                        executeInNamespace(menuId, moduleId, cachedScript);
+                        return;
+                    } catch (e) {}
+                }
             }
-        }
 
+            fetchAndUpdateModule(menuId, moduleId, module);
+        }
+    }
+
+    function fetchAndUpdateModule(menuId, moduleId, module) {
         GM_xmlhttpRequest({
             method: 'GET',
             url: module.url,
@@ -115,9 +125,23 @@
                     executeInNamespace(menuId, moduleId, scriptContent);
                     setModuleLocalVersion(menuId, moduleId, module.version);
                     updateVersionDisplay(menuId, moduleId);
-                } catch (e) {}
+                } catch (e) {
+                    const cachedScript = getModuleScript(menuId, moduleId);
+                    if (cachedScript) {
+                        try {
+                            executeInNamespace(menuId, moduleId, cachedScript);
+                        } catch (e) {}
+                    }
+                }
             },
-            onerror: function() {}
+            onerror: function() {
+                const cachedScript = getModuleScript(menuId, moduleId);
+                if (cachedScript) {
+                    try {
+                        executeInNamespace(menuId, moduleId, cachedScript);
+                    } catch (e) {}
+                }
+            }
         });
     }
 
@@ -361,7 +385,6 @@
             floatingButton.style.display = 'block';
         }
     }
-
     function createSwitch(menuId, moduleId) {
         const switchLabel = document.createElement('label');
         switchLabel.classList.add('switch');
@@ -456,61 +479,61 @@
     }
 
     function clearLocalStorage() {
-            GM_listValues().forEach((key) => {
-                GM_deleteValue(key);
-            });
+        GM_listValues().forEach((key) => {
+            GM_deleteValue(key);
+        });
+    }
+
+    GM_addStyle(`
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 34px;
+            height: 20px;
         }
 
-        GM_addStyle(`
-            .switch {
-                position: relative;
-                display: inline-block;
-                width: 34px;
-                height: 20px;
-            }
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
 
-            .switch input {
-                opacity: 0;
-                width: 0;
-                height: 0;
-            }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 20px;
+        }
 
-            .slider {
-                position: absolute;
-                cursor: pointer;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                background-color: #ccc;
-                transition: .4s;
-                border-radius: 20px;
-            }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 12px;
+            width: 12px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
 
-            .slider:before {
-                position: absolute;
-                content: "";
-                height: 12px;
-                width: 12px;
-                left: 4px;
-                bottom: 4px;
-                background-color: white;
-                transition: .4s;
-                border-radius: 50%;
-            }
+        input:checked + .slider {
+            background-color: #2196F3;
+        }
 
-            input:checked + .slider {
-                background-color: #2196F3;
-            }
+        input:checked + .slider:before {
+            transform: translateX(14px);
+        }
 
-            input:checked + .slider:before {
-                transform: translateX(14px);
-            }
+        #new-version-alert {
+            display: none;
+        }
+    `);
 
-            #new-version-alert {
-                display: none;
-            }
-        `);
-
-        fetchModulesConfig();
-    })();
+    fetchModulesConfig();
+})();
