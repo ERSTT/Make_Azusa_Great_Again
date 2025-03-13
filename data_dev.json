@@ -1,0 +1,141 @@
+{
+    "menu": [
+        {
+            "name": "抽卡页",
+            "id": "0",
+            "modules": [
+                {
+                    "name": "抽卡页添加统计",
+                    "url": "https://raw.githubusercontent.com/ERSTT/Files/refs/heads/main/JavaScript/Azusa_add_statistics_to_lottery.user.js",
+                    "author": "",
+                    "version": "4.8",
+                    "id": "0"
+                },
+                {
+                    "name": "卡片标记未拥有",
+                    "url": "https://raw.githubusercontent.com/ERSTT/Files/refs/heads/main/JavaScript/Azusa_card_marking_not_owned.user.js",
+                    "author": "",
+                    "version": "3.1",
+                    "id": "1"
+                },
+                {
+                    "name": "卡片标记红绿",
+                    "url": "https://raw.githubusercontent.com/ERSTT/Files/refs/heads/main/JavaScript/Azusa_card_marking.user.js",
+                    "author": "",
+                    "version": "2.0",
+                    "id": "2"
+                },
+                {
+                    "name": "一键翻转所有卡片",
+                    "url": "https://raw.githubusercontent.com/ERSTT/Files/refs/heads/main/JavaScript/Azusa_Turn_all_cards.user.js",
+                    "author": "",
+                    "version": "1.3",
+                    "id": "3"
+                }
+            ]
+        },
+        {
+            "name": "个人页",
+            "id": "1",
+            "modules": [
+                {
+                    "name": "个人页魔力统计",
+                    "url": "https://raw.githubusercontent.com/ERSTT/Make_Azusa_Great_Again/refs/heads/main/JavaScript/Azusa_Bonus_Statistics.user.js",
+                    "author": "",
+                    "version": "1.6",
+                    "id": "0"
+                }
+            ]
+        },
+        {
+            "name": "发布页",
+            "id": "4",
+            "modules": [
+                {
+                    "name": "添加预设简介模板",
+                    "url": "https://github.com/ERSTT/Make_Azusa_Great_Again/raw/refs/heads/main/JavaScript/Azusa_add_template_to_upload.user.js",
+                    "author": "",
+                    "version": "0.1",
+                    "id": "0"
+                },
+                {
+                    "name": "禁止上传种子文件时自动填写标题",
+                    "url": "https://raw.githubusercontent.com/ERSTT/Files/refs/heads/main/JavaScript/Azusa_disables_automatic_title.user.js",
+                    "author": "",
+                    "version": "1.0",
+                    "id": "2"
+                }
+            ]
+        },
+        {
+            "name": "种子页",
+            "id": "2",
+            "modules": [
+                {
+                    "name": "瀑布流点击改为预览简介",
+                    "url": "https://raw.githubusercontent.com/ERSTT/Make_Azusa_Great_Again/refs/heads/main/JavaScript/Azusa_Waterfall_Add_Preview.user.js",
+                    "author": "建议配合添加下载按钮使用",
+                    "version": "0.4",
+                    "id": "2"
+                },
+                {
+                    "name": "瀑布流卡片右上角添加下载按钮",
+                    "url": "https://raw.githubusercontent.com/ERSTT/Make_Azusa_Great_Again/refs/heads/main/JavaScript/Azusa_Waterfall_Add_Download.user.js",
+                    "author": "",
+                    "version": "0.1",
+                    "id": "3"
+                },
+                {
+                    "name": "种子页删除已做种种子",
+                    "url": "https://raw.githubusercontent.com/ERSTT/Files/refs/heads/main/JavaScript/Azusa_remove_seeding.user.js",
+                    "author": "",
+                    "version": "1.0",
+                    "id": "0"
+                },
+                {
+                    "name": "种子页添加Bangumi封面.评分.标签",
+                    "url": "https://raw.githubusercontent.com/ERSTT/Make_Azusa_Great_Again/refs/heads/main/JavaScript/azusa_partner.user.js",
+                    "author": "作者:<a href='https://azusa.wiki/userdetails.php?id=3551' target='_blank'>moeruotaku</a>",
+                    "version": "Auto",
+                    "id": "1"
+                    "auto": "1"
+                }
+            ]
+        },
+        {
+            "name": "全站生效",
+            "id": "3",
+            "modules": [
+                {
+                    "name": "禁用彩虹ID",
+                    "url": "https://raw.githubusercontent.com/ERSTT/Make_Azusa_Great_Again/refs/heads/main/JavaScript/Azusa_Disables_Rainbow_ID.user.js",
+                    "author": "",
+                    "version": "1.1",
+                    "id": "0"
+                },
+                {
+                    "name": "禁用徽章展示",
+                    "url": "https://raw.githubusercontent.com/ERSTT/Make_Azusa_Great_Again/refs/heads/main/JavaScript/Azusa_Disables_Badge.user.js",
+                    "author": "",
+                    "version": "0.1",
+                    "id": "6"
+                },
+                {
+                    "name": "自适应宽版网页",
+                    "url": "https://raw.githubusercontent.com/ERSTT/Make_Azusa_Great_Again/refs/heads/main/JavaScript/Azusa_expand_the_page_width.user.js",
+                    "author": "作者:<a href='https://azusa.wiki/userdetails.php?id=3551' target='_blank'>moeruotaku</a>",
+                    "version": "2024.12.1.1264",
+                    "id": "4"
+                },
+                {
+                    "name": "添加自定义背景图片功能",
+                    "url": "https://raw.githubusercontent.com/ERSTT/Make_Azusa_Great_Again/refs/heads/main/JavaScript/Azusa_Add_Custom_Background_Image.user.js",
+                    "author": "<a href='https://azusa.wiki/usercp.php?action=tracker' target='_blank'>点此前往设置</a>",
+                    "version": "0.4",
+                    "id": "7"
+                }
+            ]
+        }
+    ],
+    "maga-version": "1.2.1"
+}
