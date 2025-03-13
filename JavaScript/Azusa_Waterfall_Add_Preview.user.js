@@ -31,6 +31,13 @@
             padding: 5px 10px; border-radius: 50%;
         }
         .preview-close:hover { background: rgba(255, 255, 255, 0.9); }
+        .preview-modal {
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        .preview-modal::-webkit-scrollbar {
+            display: none;
+        }
     `);
 
     document.body.insertAdjacentHTML('beforeend', `
