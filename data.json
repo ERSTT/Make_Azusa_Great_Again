@@ -151,8 +151,8 @@
                 {
                     "name": "自适应宽版网页",
                     "url": "https://raw.githubusercontent.com/ERSTT/Make_Azusa_Great_Again/refs/heads/main/JavaScript/Azusa_expand_the_page_width.user.js",
-                    "author": "作者:<a href='https://azusa.wiki/userdetails.php?id=3551' target='_blank'>moeruotaku</a>",
-                    "version": "2024.12.1.1264",
+                    "author": "<button id="azusa_expand_the_page_width_settings_button">设置页面</button>",
+                    "version": "1.1",
                     "id": "4",
                     "auto": "0"
                 },
