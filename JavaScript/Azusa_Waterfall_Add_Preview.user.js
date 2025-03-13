@@ -68,6 +68,7 @@
                 let descTd = [...doc.querySelectorAll('.rowhead')].find(td => td.textContent.includes('简介'));
                 document.getElementById('preview-content').innerHTML = descTd ? descTd.nextElementSibling.innerHTML : '无法加载简介';
                 modal.style.display = overlay.style.display = 'block';
+                modal.scrollTop = 0;
             }
         });
     });
