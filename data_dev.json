@@ -79,20 +79,23 @@
             "id": "2",
             "modules": [
                 {
-                    "name": "瀑布流点击改为预览简介",
+                    "name": "瀑布流点击改为预览简介/Peer列表",
                     "url": "https://raw.githubusercontent.com/ERSTT/Make_Azusa_Great_Again/refs/heads/main/JavaScript/Azusa_Waterfall_Add_Preview.user.js",
-                    "author": "建议配合添加下载按钮使用",
-                    "version": "0.4",
+                    "author": "建议配合添加一些按钮使用",
+                    "version": "0.8",
                     "id": "2",
                     "auto": "0"
                 },
                 {
-                    "name": "瀑布流卡片右上角添加下载按钮",
+                    "name": "瀑布流卡片添加一些按钮",
                     "url": "https://raw.githubusercontent.com/ERSTT/Make_Azusa_Great_Again/refs/heads/main/JavaScript/Azusa_Waterfall_Add_Download.user.js",
                     "author": "",
-                    "version": "0.1",
+                    "version": "0.3",
                     "id": "3",
                     "auto": "0"
+                },
+                {
+                    "id": "5"
                 },
                 {
                     "name": "种子页删除已做种种子",
@@ -143,8 +146,8 @@
                 {
                     "name": "自适应宽版网页",
                     "url": "https://raw.githubusercontent.com/ERSTT/Make_Azusa_Great_Again/refs/heads/main/JavaScript/Azusa_expand_the_page_width.user.js",
-                    "author": "作者:<a href='https://azusa.wiki/userdetails.php?id=3551' target='_blank'>moeruotaku</a>",
-                    "version": "2024.12.1.1264",
+                    "author": "",
+                    "version": "1.2",
                     "id": "4",
                     "auto": "0"
                 },
@@ -159,5 +162,5 @@
             ]
         }
     ],
-    "maga-version": "1.2.1"
+    "maga-version": "1.2.2"
 }
