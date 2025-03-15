@@ -1,22 +1,9 @@
-// ==UserScript==
-// @name         Azusa 魔力统计
-// @namespace    https://github.com/ERSTT
-// @icon         https://azusa.wiki/favicon.ico
-// @version      1.6
-// @description  Azusa 个人页魔力统计改为表格形式
-// @author       ERST
-// @match        https://azusa.wiki/*userdetails*
-// @match        https://zimiao.icu/*userdetails*
-// @grant        GM_xmlhttpRequest
-// @grant        GM_addStyle
-// @updateURL    https://raw.githubusercontent.com/ERSTT/Make_Azusa_Great_Again/refs/heads/main/JavaScript/Azusa_Bonus_Statistics.user.js
-// @downloadURL  https://raw.githubusercontent.com/ERSTT/Make_Azusa_Great_Again/refs/heads/main/JavaScript/Azusa_Bonus_Statistics.user.js
-// @changelog    适配MAGA
-// @run-at       document-end
-// ==/UserScript==
-
 (function () {
     'use strict';
+
+    if (!window.location.href.includes('customBgUrl') && !window.location.href.includes('/userdetails.php')) {
+        return;
+    }
 
     const bonus_statistics_loadScript = function (src) {
         return new Promise(function (resolve, reject) {
@@ -45,6 +32,10 @@
 
     function bonus_statistics_main() {
         GM_addStyle(`
+            .hidden-content { display: none; }
+            .toggle-btn { display: inline-flex; align-items: center; gap: 5px; margin-bottom: 10px;color: black;text-decoration: underline;cursor: pointer; }
+            .toggle-btn img { width: 12px; height: 12px; }
+            .toggle-btn:hover { color: orange; text-decoration: underline; cursor: pointer; }
             .checkbox-container { display: flex; flex-wrap: nowrap; gap: 15px; justify-content: flex-start; }
             .checkbox-wrapper { display: flex; align-items: center; margin-bottom: 5px; width: auto; }
             .checkbox-wrapper input[type="checkbox"] { margin-right: 5px; }
@@ -55,30 +46,72 @@
         `);
 
         const targetTextarea = document.querySelector('textarea[readonly][disabled]');
-        if (!targetTextarea) {
-            return;
-        }
+        if (!targetTextarea) return;
         targetTextarea.style.display = 'none';
 
         const statsDiv = document.createElement('div');
-        statsDiv.appendChild(bonus_statistics_createTitle('魔力统计'));
+
+        // 创建显示/隐藏按钮
+        const toggleBtn = document.createElement('div');
+        toggleBtn.className = 'toggle-btn';
+
+        const toggleIcon = document.createElement('img');
+        toggleIcon.src = 'pic/trans.gif';
+        toggleIcon.className = 'plus';
+        toggleIcon.alt = 'Show/Hide';
+        toggleIcon.title = '显示/隐藏';
+        toggleIcon.style.width = "9px";
+        toggleIcon.style.height = "9px";
+
+        const toggleText = document.createElement('span');
+        toggleText.textContent = '[显示/隐藏]';
+
+        toggleBtn.append(toggleIcon, toggleText);
+        statsDiv.appendChild(toggleBtn);
+
+        // 统计内容容器
+        const statsContent = document.createElement('div');
+        statsContent.id = 'statsContent';
+        statsContent.className = 'hidden-content';
+        statsDiv.appendChild(statsContent);
 
         const rawData = targetTextarea.value.trim();
         if (!rawData) {
-            statsDiv.textContent = '框体描述为空，无法生成统计数据';
-            return;
-        }
+            statsContent.textContent = '框体描述为空，无法生成统计数据';
+        } else {
+            const records = bonus_statistics_parseData(rawData);
+            statsContent.append(
+                bonus_statistics_createTitle('魔力统计'),
+                bonus_statistics_createSummaryDiv(records),
+                bonus_statistics_createFilterDiv(records),
+                bonus_statistics_createTable(records)
+            );
 
-        const records = bonus_statistics_parseData(rawData);
-        statsDiv.appendChild(bonus_statistics_createSummaryDiv(records));
-        statsDiv.appendChild(bonus_statistics_createFilterDiv(records));
-        statsDiv.appendChild(bonus_statistics_createTable(records));
+            bonus_statistics_initDataTable(records);
+            bonus_statistics_updateSummary(records);
+        }
 
         targetTextarea.parentNode.insertBefore(statsDiv, targetTextarea);
 
-        bonus_statistics_initDataTable(records);
-        bonus_statistics_updateSummary(records);
+        // 切换显示/隐藏
+        toggleBtn.addEventListener('click', function () {
+            if (statsContent.style.display === 'none' || statsContent.style.display === '') {
+                statsContent.style.display = 'block';
+                toggleIcon.className = 'minus';
+
+                // 重新调整 DataTables 的列宽
+                setTimeout(() => {
+                    if ($.fn.DataTable.isDataTable('#magicStatsTable')) {
+                        $('#magicStatsTable').DataTable().columns.adjust().draw();
+                    }
+                }, 50);
+            } else {
+                statsContent.style.display = 'none';
+                toggleIcon.className = 'plus';
+            }
+        });
     }
+
 
     function bonus_statistics_createTitle(text) {
         const title = document.createElement('h3');
