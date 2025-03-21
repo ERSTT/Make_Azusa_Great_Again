@@ -98,7 +98,7 @@
     }
 
     function updateStatsHtml(stats, ruleTable) {
-        const { totalLotteryCount, rewardCount, unluckyCount, characterCount, magic1000, magic5000, magic10000, upload1G, upload2G, upload3G, upload10G, rainbow7days } = stats;
+        const { totalLotteryCount, rewardCount, unluckyCount, characterCount, inviteCount, magic1000, magic5000, magic10000, upload1G, upload2G, upload3G, upload10G, rainbow7days } = stats;
 
         const detailedHtml = `
             <tbody>
