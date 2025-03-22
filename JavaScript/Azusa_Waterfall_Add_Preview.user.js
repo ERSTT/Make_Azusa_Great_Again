@@ -5,8 +5,12 @@
         return;
     }
 
-    GM_addStyle(
-        `.preview-overlay {
+    GM_addStyle(`
+        .torrent-stats {
+            cursor: pointer !important;
+        }
+
+        .preview-overlay {
             position: fixed; top: 0; left: 0;
             width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.2);
