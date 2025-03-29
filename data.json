@@ -103,7 +103,7 @@
                     "auto": "0"
                 },
                 {
-                    "name": "种子页删除已做种种子",
+                    "name": "种子页隐藏已做种种子",
                     "url": "https://raw.githubusercontent.com/ERSTT/Files/refs/heads/main/JavaScript/Azusa_remove_seeding.user.js",
                     "author": "",
                     "version": "1.0",
