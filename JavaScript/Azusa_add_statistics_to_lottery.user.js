@@ -47,6 +47,7 @@
             const button = document.createElement('button');
             button.innerText = "简洁模式";
             button.style.marginLeft = '10px';
+            button.style.display = 'none';  // 隐藏按钮
             button.addEventListener('click', toggleMode);
 
             ruleHeader.appendChild(button);
