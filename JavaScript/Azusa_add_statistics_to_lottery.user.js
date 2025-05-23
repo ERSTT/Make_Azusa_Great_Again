@@ -5,9 +5,29 @@
         return;
     }
 
-    // 获取URL中的csrf_token参数
-    const urlParams = new URLSearchParams(window.location.search);
-    const csrfToken = urlParams.get('csrf_token');
+    // 从HTML页面找到含有 csrf_token 的链接
+    let csrfToken = null;
+
+    const links = document.querySelectorAll('a[href*="csrf_token="]');
+    for (const link of links) {
+        const href = link.getAttribute('href');
+
+        // 尝试提取 URL 中的嵌套参数值
+        const urlMatch = href.match(/url=([^&]+)/);
+        if (!urlMatch) continue;
+
+        const innerUrl = decodeURIComponent(urlMatch[1]);  // 解码后可能带 csrf_token
+        const tokenMatch = innerUrl.match(/csrf_token=([a-zA-Z0-9]+)/);
+        if (tokenMatch) {
+            csrfToken = tokenMatch[1];
+            break;
+        }
+    }
+
+    if (!csrfToken) {
+        console.warn('未找到 csrf_token');
+        return;
+    }
 
     // 根据当前页面的域名动态设置统计 URL
     const statisticsUrl = `https://${window.location.host}/lotterySettingSave.php?csrf_token=${csrfToken}&action=userLotteryStatistics`;
