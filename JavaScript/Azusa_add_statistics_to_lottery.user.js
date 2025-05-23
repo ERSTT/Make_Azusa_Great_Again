@@ -8,18 +8,22 @@
     // 从HTML页面找到含有 csrf_token 的链接
     let csrfToken = null;
 
-    const links = document.querySelectorAll('a[href*="csrf_token="]');
+    const links = document.querySelectorAll('a');
     for (const link of links) {
         const href = link.getAttribute('href');
+        if (!href) continue;
 
-        // 尝试提取 URL 中的嵌套参数值
-        const urlMatch = href.match(/url=([^&]+)/);
-        if (!urlMatch) continue;
+        // 解码 href，处理 URL 编码
+        const decodedHref = decodeURIComponent(href);
 
-        const innerUrl = decodeURIComponent(urlMatch[1]);  // 解码后可能带 csrf_token
-        const tokenMatch = innerUrl.match(/csrf_token=([a-zA-Z0-9]+)/);
-        if (tokenMatch) {
-            csrfToken = tokenMatch[1];
+        // 只处理链接中包含 'lottery.php' 的
+        if (!decodedHref.includes('lottery.php')) continue;
+
+        // 从 decodedHref 中提取 csrf_token 参数
+        const match = decodedHref.match(/csrf_token=([^&]+)/);
+        if (match) {
+            csrfToken = match[1];
+            console.log('✅ 找到 csrf_token:', csrfToken);
             break;
         }
     }
