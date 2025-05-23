@@ -23,7 +23,7 @@
         const match = decodedHref.match(/csrf_token=([^&]+)/);
         if (match) {
             csrfToken = match[1];
-            console.log('✅ 找到 csrf_token:', csrfToken);
+            console.log('找到 csrf_token:', csrfToken);
             break;
         }
     }
