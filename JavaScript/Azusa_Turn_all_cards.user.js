@@ -5,7 +5,7 @@
 // @version      1.4
 // @description  Azusa 一键翻转所有卡片
 // @author       ERST
-// @match        https://zimiao.icu/*lottery.php*action=lottery*
+// @match        https://azusa.wiki/*lottery.php*action=lottery*
 // @match        https://zimiao.icu/*lottery.php*action=lottery*
 // @grant        none
 // @updateURL    https://raw.githubusercontent.com/ERSTT/Files/refs/heads/main/JavaScript/Azusa_Turn_all_cards.user.js
