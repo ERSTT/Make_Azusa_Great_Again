@@ -16,7 +16,7 @@
 (function () {
     'use strict';
 
-    if (!window.location.href.includes('customBgUrl') && !window.location.href.includes('/lottery.php')) {
+    if (!(window.location.href.includes('customBgUrl') && window.location.href.includes('/lottery.php'))) {
         return;
     }
 
