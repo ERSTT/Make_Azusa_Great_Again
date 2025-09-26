@@ -37,7 +37,7 @@
                     "auto": "0"
                 },
                 {
-                    "name": "合成卡片隐藏0/1张的卡片",
+                    "name": "卡片合成隐藏0/1张的卡片",
                     "url": "https://raw.githubusercontent.com/ERSTT/Make_Azusa_Great_Again/refs/heads/main/JavaScript/Azusa_Hidden_Card.user.js",
                     "author": "",
                     "version": "1.1",
