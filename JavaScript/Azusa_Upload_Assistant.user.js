@@ -1,23 +1,23 @@
 // ==UserScript==
-// @name         Azusa Upload Assistant
+// @name         Azusa Upload Assistant (No jQuery)
 // @author       Beer
-// @version      0.0.6
-// @description  Assist with get information while uploading torrents for Azusa.
-// @match        https://azusa.wiki/upload.php
+// @version      0.0.7
+// @description  Assist with getting information while uploading torrents for Azusa, without jQuery.
+// @match        https://azusa.wiki/*
 // @icon         https://azusa.wiki/favicon.ico
 // @run-at       document-end
 // @grant        GM_addStyle
 // @grant        GM_getValue
 // @grant        GM_setValue
 // @grant        GM_openInTab
-// @grant        GM.xmlHttpRequest
 // @grant        GM_xmlhttpRequest
 // @grant        GM_setClipboard
 // @license      MIT
 // @namespace    https://greasyfork.org/zh-CN/users/942532-beer
 // ==/UserScript==
+
 (() => {
-    
+
     // 指定页面生效
     const url = new URL(window.location.href);
 
@@ -122,17 +122,18 @@
 
         document.querySelector('[name=name]').value = titleStr;
         document.querySelector('[name=small_descr]').value = subtitleStr;
-        document.querySelector('[name=descr]').value = descStr;
+        if (descField) descField.value = descStr;
         document.querySelector('[name=type]').value = entry.type;
         document.querySelector('[name=uplver]').checked = true;
     }
 
     /* key nodes */
-    const form = document.querySelector('#compose');
-    const torrentTr = document.querySelector('#torrent').closest('tr');
+    const form = document.querySelector('table');
+    const torrentInput = document.querySelector('#torrent_file');
+    const torrentTr = torrentInput.closest('tr');
     const titleField = document.querySelector('[name=name]');
     const subtitleField = document.querySelector('[name=small_descr]');
-    const descField = document.querySelector('[name=descr]');
+    const descField = document.querySelector('[name=descr]') || document.querySelector('[name=body]');
     const typeField = document.querySelector('[name=type]');
     const uplverField = document.querySelector('[name=uplver]');
 
@@ -153,6 +154,8 @@
     btn.type = 'button';
     btn.value = '辅助填写';
     btn.addEventListener('click', getInfo);
-    tr.querySelector('#bgmlink').after(btn);
+
+    const br = document.createElement('br');
+    tr.querySelector('#bgmlink').after(br, btn);
 
 })();
