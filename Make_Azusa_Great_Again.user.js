@@ -2,7 +2,7 @@
 // @name         Make Azusa Great Again
 // @namespace    https://github.com/ERSTT
 // @icon         https://azusa.wiki/favicon.ico
-// @version      1.2.3
+// @version      1.2.4
 // @description  Make Azusa Great Again
 // @author       ERST
 // @match        https://azusa.wiki/*
