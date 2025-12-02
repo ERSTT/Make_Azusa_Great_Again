@@ -65,6 +65,14 @@
             "id": "4",
             "modules": [
                 {
+                    "name": "添加BGM自动填写",
+                    "url": "https://github.com/ERSTT/Make_Azusa_Great_Again/raw/refs/heads/main/JavaScript/Azusa_add_template_to_upload.user.js",
+                    "author": "作者:<a href='https://greasyfork.org/zh-CN/users/942532-beer' target='_blank'>Beer</a>",
+                    "version": "0.0.5",
+                    "id": "3",
+                    "auto": "0"
+                },
+                {
                     "name": "添加预设简介模板",
                     "url": "https://github.com/ERSTT/Make_Azusa_Great_Again/raw/refs/heads/main/JavaScript/Azusa_add_template_to_upload.user.js",
                     "author": "",
