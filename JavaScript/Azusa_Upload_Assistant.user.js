@@ -1,9 +1,8 @@
 // ==UserScript==
 // @name         Azusa Upload Assistant
 // @author       Beer
-// @version      0.0.5
+// @version      0.0.6
 // @description  Assist with get information while uploading torrents for Azusa.
-// @require      https://cdn.staticfile.org/jquery/1.7.1/jquery.min.js
 // @match        https://azusa.wiki/upload.php
 // @icon         https://azusa.wiki/favicon.ico
 // @run-at       document-end
@@ -31,7 +30,7 @@
         return; // 非指定页面时直接停止执行
     }
 
-    var entry = {
+    const entry = {
         title: '原名',
         chineseTitle: '中文名',
         author: '作者',
@@ -41,125 +40,119 @@
         img: '',
         desc: '',
         type: 0
-    }
+    };
 
     /* utils */
     async function getWebInfo(url) {
-        return new Promise( (resolve, reject) => {
-            GM.xmlHttpRequest({
+        return new Promise((resolve) => {
+            GM_xmlhttpRequest({
                 method: "GET",
                 url: url,
-                responseType: "json",
                 onload: function (response) {
                     resolve(response.responseText);
                 },
-                onerror: function (error) {
+                onerror: function () {
                     resolve('');
                 }
             });
         });
     }
 
-    function getInfoKV(node) {
-        let infoKV = [];
-        let key = node.find('span').text();
-        infoKV.push(key);
-        let value = ''
-        node.contents().each( function () {
-            console.log(this);
-            console.log($(this).index());
-            if(this.nodeType==3 || $(this).index() != 0) {
-                value += $(this).text();
-                console.log(value);
+    function getInfoKV(li) {
+        const key = li.querySelector('span')?.textContent || '';
+        let value = '';
+        li.childNodes.forEach((node, idx) => {
+            if (node.nodeType === 3 || idx !== 0) {
+                value += node.textContent;
             }
         });
         value = value.replace('、', ' X ');
-        infoKV.push(value);
-        return infoKV;
+        return [key, value];
     }
 
     async function getInfo() {
-        let url = $('#bgmlink').val();
-        if(!url.match(/https:\/\/bgm\.tv\/subject\/\d+/i)) {
+        const url = document.querySelector('#bgmlink').value;
+        if (!url.match(/https:\/\/bgm\.tv\/subject\/\d+/i)) {
             alert('请输入合法的链接');
+            return;
         }
-        let info = await getWebInfo(url);
-        entry.title = $(info).find('.nameSingle a').text();
-        let $infobox = $(info).find('#infobox');
-        $infobox.find('li').each(function () {
-            let infokv = getInfoKV($(this));
-            if(infokv[0].match(/中文名/g)) {
-                entry.chineseTitle = infokv[1];
-            }
-            else if(infokv[0].match(/中文名|作画|作者/g)) {
-                entry.author = infokv[1];
-            }
-            else if(infokv[0].match(/册数/g)) {
-                entry.vol = infokv[1];
-            }
-            else if(infokv[0].match(/出版社/g)) {
-                entry.publisher = infokv[1];
-            }
-            else if(infokv[0].match(/游戏/g)) {
-                entry.type = 404;
-            }
+
+        const infoText = await getWebInfo(url);
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(infoText, 'text/html');
+
+        entry.title = doc.querySelector('.nameSingle a')?.textContent || '';
+
+        const infobox = doc.querySelector('#infobox');
+        if (infobox) {
+            infobox.querySelectorAll('li').forEach(li => {
+                const [key, value] = getInfoKV(li);
+                if (key.includes('中文名')) entry.chineseTitle = value;
+                else if (key.includes('作画') || key.includes('作者')) entry.author = value;
+                else if (key.includes('册数')) entry.vol = value;
+                else if (key.includes('出版社')) entry.publisher = value;
+                else if (key.includes('游戏')) entry.type = 404;
+            });
+        }
+
+        const cover = doc.querySelector('img.cover');
+        if (cover) entry.img = 'https:' + cover.src.replace('cover/c/', 'cover/l/');
+
+        entry.desc = doc.querySelector('#subject_summary')?.textContent || '';
+
+        doc.querySelectorAll('.subject_tag_section a span').forEach(span => {
+            const text = span.textContent;
+            if (text.includes('已完结')) entry.complete = '完结';
+            else if (text.includes('漫画')) entry.type = 402;
+            else if (text.includes('小说')) entry.type = 403;
+            else if (text.includes('画集')) entry.type = 407;
         });
-        entry.img = 'https:' + $(info).find('img.cover').attr('src').replace('cover/c/', 'cover/l/', 1);
-        entry.desc = $(info).find('#subject_summary').text();
-        $(info).find('.subject_tag_section a span').each(function () {
-            if($(this).text().indexOf('已完结') != -1) {
-                entry.complete = '完结'
-            }
-            else if($(this).text().indexOf('漫画') != -1) {
-                entry.type = 402;
-            }
-            else if($(this).text().indexOf('小说') != -1) {
-                entry.type = 403;
-            }
-            else if($(this).text().indexOf('画集') != -1) {
-                entry.type = 407;
-            }
-        });
+
         console.log(entry);
-        let title = '';
-        if(entry.type == 402 || entry.type == 403) {
-            title = '[' + entry.chineseTitle + '][' + entry.author + '][Vol.01-Vol.卷数]';
+
+        let titleStr = '';
+        if (entry.type === 402 || entry.type === 403) {
+            titleStr = `[${entry.chineseTitle}][${entry.author}][Vol.01-Vol.卷数]`;
+        } else {
+            titleStr = `[${entry.chineseTitle}][${entry.author}]`;
         }
-        else {
-            title = '[' + entry.chineseTitle + '][' + entry.author + ']';
-        }
 
-        let subtitle = entry.title + ' | ' + entry.complete;
+        const subtitleStr = `${entry.title} | ${entry.complete}`;
+        const descStr = `[img]${entry.img}[/img]\n\n${entry.desc}`;
 
-        let desc = '[img]' + entry.img + '[/img]\n\n' + entry.desc;
-
-        $title.val(title);
-        $subtitle.val(subtitle);
-        $desc.val(desc);
-        $type.val(entry.type);
-        $upvler.attr('checked', true);
+        document.querySelector('[name=name]').value = titleStr;
+        document.querySelector('[name=small_descr]').value = subtitleStr;
+        document.querySelector('[name=descr]').value = descStr;
+        document.querySelector('[name=type]').value = entry.type;
+        document.querySelector('[name=uplver]').checked = true;
     }
 
     /* key nodes */
-    var $form = $('#compose');
-    var $tbody = $form.find('tbody');
-    var $torrentTr = $('#torrent').closest('tr');
-    var $title = $('[name=name]');
-    var $subtitle = $('[name=small_descr]');
-    var $desc = $('[name=descr]');
-    var $type = $('[name=type]');
-    var $upvler = $('[name=uplver]');
+    const form = document.querySelector('#compose');
+    const torrentTr = document.querySelector('#torrent').closest('tr');
+    const titleField = document.querySelector('[name=name]');
+    const subtitleField = document.querySelector('[name=small_descr]');
+    const descField = document.querySelector('[name=descr]');
+    const typeField = document.querySelector('[name=type]');
+    const uplverField = document.querySelector('[name=uplver]');
 
     /* generate nodes */
-    var $warning = $("<h3><font color='red'>请上传种子后再填写信息，否则标题可能被覆盖</font></h3>");
-    var $qInfo = $('<tr><td class="rowhead nowrap" valign="top" align="right">BGM链接</td><td class="rowfollow" valign="top" align="left"><input type="text" style="width: 92%;" id="bgmlink" placeholder="https://bgm.tv/subject/123456"><br><font class="medium">例如：<b>https://bgm.tv/subject/149014</b></font></td></tr>');
-    var $getInfo = $('<input type="button" value="辅助填写">');
-    $getInfo.click(getInfo);
-    $qInfo.find('#bgmlink').after($getInfo);
+    const warning = document.createElement('h3');
+    warning.innerHTML = `<font color='red'>请上传种子后再填写信息，否则标题可能被覆盖</font>`;
+    form.prepend(warning);
 
-    /* change webpage */
-    $warning.prependTo($form);
-    $torrentTr.after($qInfo);
-    $title.next().next().find('b').text('[中文名][作者][卷数(格式为Vol.01-Vol.xx)];画集或公式书:[原名][作者或出版社];游戏:[原名][中文名][制作方]');
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+        <td class="rowhead nowrap" valign="top" align="right">BGM链接</td>
+        <td class="rowfollow" valign="top" align="left">
+            <input type="text" style="width: 92%;" id="bgmlink" placeholder="https://bgm.tv/subject/123456"><br>
+        </td>`;
+    torrentTr.after(tr);
+
+    const btn = document.createElement('input');
+    btn.type = 'button';
+    btn.value = '辅助填写';
+    btn.addEventListener('click', getInfo);
+    tr.querySelector('#bgmlink').after(btn);
 
 })();
