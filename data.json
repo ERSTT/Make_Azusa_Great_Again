@@ -73,14 +73,6 @@
                     "auto": "0"
                 },
                 {
-                    "name": "添加预设简介模板",
-                    "url": "https://github.com/ERSTT/Make_Azusa_Great_Again/raw/refs/heads/main/JavaScript/Azusa_add_template_to_upload.user.js",
-                    "author": "",
-                    "version": "0.1",
-                    "id": "0",
-                    "auto": "0"
-                },
-                {
                     "name": "禁止上传种子文件时自动填写标题",
                     "url": "https://raw.githubusercontent.com/ERSTT/Files/refs/heads/main/JavaScript/Azusa_disables_automatic_title.user.js",
                     "author": "",
