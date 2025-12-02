@@ -18,6 +18,18 @@
 // @namespace    https://greasyfork.org/zh-CN/users/942532-beer
 // ==/UserScript==
 (() => {
+    
+    // 指定页面生效
+    const url = new URL(window.location.href);
+
+    // 判断页面
+    const isCustom = url.href.includes('customBgUrl');
+    const isUpload = url.pathname === '/upload.php';
+    const isOffer = url.pathname === '/offers.php' && url.searchParams.get('add_offer') === '1';
+
+    if (!isCustom && !isUpload && !isOffer) {
+        return; // 非指定页面时直接停止执行
+    }
 
     var entry = {
         title: '原名',
