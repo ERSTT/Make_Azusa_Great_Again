@@ -28,6 +28,8 @@
 // @grant        GM_getValue
 // @grant        GM_deleteValue
 // @grant        GM_listValues
+// @grant        GM_openInTab
+// @grant        GM_setClipboard
 // @grant        unsafeWindow
 // @run-at       document-body
 // ==/UserScript==
