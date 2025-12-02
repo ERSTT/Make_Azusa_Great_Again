@@ -71,14 +71,6 @@
                     "version": "0.0.9",
                     "id": "3",
                     "auto": "0"
-                },
-                {
-                    "name": "禁止上传种子文件时自动填写标题",
-                    "url": "https://raw.githubusercontent.com/ERSTT/Files/refs/heads/main/JavaScript/Azusa_disables_automatic_title.user.js",
-                    "author": "",
-                    "version": "1.0",
-                    "id": "2",
-                    "auto": "0"
                 }
             ]
         },
