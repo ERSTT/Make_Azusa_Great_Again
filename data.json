@@ -13,22 +13,6 @@
                     "auto": "0"
                 },
                 {
-                    "name": "卡片标记未拥有",
-                    "url": "https://raw.githubusercontent.com/ERSTT/Files/refs/heads/main/JavaScript/Azusa_card_marking_not_owned.user.js",
-                    "author": "",
-                    "version": "3.1",
-                    "id": "1",
-                    "auto": "0"
-                },
-                {
-                    "name": "卡片标记红绿",
-                    "url": "https://raw.githubusercontent.com/ERSTT/Files/refs/heads/main/JavaScript/Azusa_card_marking.user.js",
-                    "author": "",
-                    "version": "2.0",
-                    "id": "2",
-                    "auto": "0"
-                },
-                {
                     "name": "一键翻转所有卡片",
                     "url": "https://raw.githubusercontent.com/ERSTT/Make_Azusa_Great_Again/refs/heads/main/JavaScript/Azusa_Turn_all_cards.user.js",
                     "author": "",
@@ -132,22 +116,6 @@
             "name": "全站生效",
             "id": "3",
             "modules": [
-                {
-                    "name": "禁用彩虹ID",
-                    "url": "https://raw.githubusercontent.com/ERSTT/Make_Azusa_Great_Again/refs/heads/main/JavaScript/Azusa_Disables_Rainbow_ID.user.js",
-                    "author": "",
-                    "version": "1.1",
-                    "id": "0",
-                    "auto": "0"
-                },
-                {
-                    "name": "禁用徽章展示",
-                    "url": "https://raw.githubusercontent.com/ERSTT/Make_Azusa_Great_Again/refs/heads/main/JavaScript/Azusa_Disables_Badge.user.js",
-                    "author": "",
-                    "version": "0.1",
-                    "id": "6",
-                    "auto": "0"
-                },
                 {
                     "name": "自适应宽版网页",
                     "url": "https://raw.githubusercontent.com/ERSTT/Make_Azusa_Great_Again/refs/heads/main/JavaScript/Azusa_expand_the_page_width.user.js",
