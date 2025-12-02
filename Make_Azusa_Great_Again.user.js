@@ -2,7 +2,7 @@
 // @name         Make Azusa Great Again
 // @namespace    https://github.com/ERSTT
 // @icon         https://azusa.wiki/favicon.ico
-// @version      1.2.2
+// @version      1.2.3
 // @description  Make Azusa Great Again
 // @author       ERST
 // @match        https://azusa.wiki/*
@@ -14,6 +14,9 @@
 // @connect      s3.leaves.red
 // @connect      azusa.wiki
 // @connect      img.azusa.wiki
+// @connect      bgm.tv
+// @connect      bangumi.tv
+// @connect      chii.in
 // @updateURL    https://raw.githubusercontent.com/ERSTT/Make_Azusa_Great_Again/refs/heads/main/Make_Azusa_Great_Again.user.js
 // @downloadURL  https://raw.githubusercontent.com/ERSTT/Make_Azusa_Great_Again/refs/heads/main/Make_Azusa_Great_Again.user.js
 // @require      https://cdn.jsdelivr.net/npm/chart.js
