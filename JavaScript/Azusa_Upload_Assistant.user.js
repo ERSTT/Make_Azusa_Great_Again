@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Azusa Upload Assistant (No jQuery)
 // @author       Beer
-// @version      0.0.7
+// @version      0.0.8
 // @description  Assist with getting information while uploading torrents for Azusa, without jQuery.
 // @match        https://azusa.wiki/*
 // @icon         https://azusa.wiki/favicon.ico
