@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Azusa Upload Assistant (No jQuery)
 // @author       Beer
-// @version      0.0.8
+// @version      0.0.9
 // @description  Assist with getting information while uploading torrents for Azusa, without jQuery.
 // @match        https://azusa.wiki/*
 // @icon         https://azusa.wiki/favicon.ico
@@ -96,7 +96,10 @@
         }
 
         const cover = doc.querySelector('img.cover');
-        if (cover) entry.img = 'https:' + cover.src.replace('cover/c/', 'cover/l/');
+        if (cover) {
+            entry.img = cover.src.replace('/r/400', '');
+            entry.img = entry.img.replace('cover/c/', 'cover/l/');
+        }
 
         entry.desc = doc.querySelector('#subject_summary')?.textContent || '';
 
@@ -129,7 +132,8 @@
 
     /* key nodes */
     const form = document.querySelector('table');
-    const torrentInput = document.querySelector('#torrent_file');
+    const torrentInput = document.querySelector('#torrent') || document.querySelector('#torrent_file');
+    if (!torrentInput) return;
     const torrentTr = torrentInput.closest('tr');
     const titleField = document.querySelector('[name=name]');
     const subtitleField = document.querySelector('[name=small_descr]');
