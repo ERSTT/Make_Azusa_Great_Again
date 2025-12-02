@@ -137,11 +137,6 @@
     const typeField = document.querySelector('[name=type]');
     const uplverField = document.querySelector('[name=uplver]');
 
-    /* generate nodes */
-    const warning = document.createElement('h3');
-    warning.innerHTML = `<font color='red'>请上传种子后再填写信息，否则标题可能被覆盖</font>`;
-    form.prepend(warning);
-
     const tr = document.createElement('tr');
     tr.innerHTML = `
         <td class="rowhead nowrap" valign="top" align="right">BGM链接</td>
@@ -149,13 +144,17 @@
             <input type="text" style="width: 92%;" id="bgmlink" placeholder="https://bgm.tv/subject/123456"><br>
         </td>`;
     torrentTr.after(tr);
+    // 创建警告文字
+    const warning = document.createElement('span');
+    warning.innerHTML = `<font color='red'>请上传种子后再辅助填写信息，否则标题可能被覆盖</font>`;
 
     const btn = document.createElement('input');
     btn.type = 'button';
     btn.value = '辅助填写';
     btn.addEventListener('click', getInfo);
 
+    const bgmInput = tr.querySelector('#bgmlink');
     const br = document.createElement('br');
-    tr.querySelector('#bgmlink').after(br, btn);
+    bgmInput.after(br, btn, warning);
 
 })();
